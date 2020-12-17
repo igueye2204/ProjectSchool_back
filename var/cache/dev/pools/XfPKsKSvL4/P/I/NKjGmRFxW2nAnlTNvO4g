@@ -1,0 +1,53 @@
+<?php //%255BApp%255CEntity%255CProfilSortie%255D%255B1%255D
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\Entity'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Entity')),
+        clone ($p['ApiPlatform\\Core\\Annotation\\ApiResource'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Core\\Annotation\\ApiResource')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'repositoryClass' => [
+                'App\\Repository\\ProfilSortieRepository',
+            ],
+            'collectionOperations' => [
+                1 => [
+                    'get' => [
+                        'path' => '/profilsorties',
+                    ],
+                    'post' => [
+                        'path' => '/profilsorties',
+                    ],
+                ],
+            ],
+            'itemOperations' => [
+                1 => [
+                    'get' => [
+                        'path' => '/profilsortie/{id}',
+                    ],
+                    'put' => [
+                        'path' => '/profilsortie/{id}',
+                    ],
+                    'delete' => [
+                        'path' => '/profilsortie/{id}',
+                    ],
+                ],
+            ],
+            'attributes' => [
+                1 => [
+                    'security' => 'is_granted(\'ROLE_ADMIN\')',
+                    'security_message' => 'Accès refusé!',
+                    'pagination_enabled' => true,
+                    'pagination_items_per_page' => 2,
+                    'route_prefix' => '/admin',
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+    ],
+    []
+); }];

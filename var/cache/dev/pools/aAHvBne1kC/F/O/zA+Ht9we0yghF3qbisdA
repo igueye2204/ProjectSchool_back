@@ -21,25 +21,13 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                         'output' => null,
                         'method' => 'GET',
                         'input_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
                                 'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
                             ],
                         ],
                         'output_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
                                 'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
                             ],
                         ],
                     ],
@@ -49,25 +37,13 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                         'output' => null,
                         'method' => 'PUT',
                         'input_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
                                 'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
                             ],
                         ],
                         'output_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
                                 'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
                             ],
                         ],
                     ],
@@ -81,25 +57,13 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                         'output' => null,
                         'method' => 'GET',
                         'input_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
                                 'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
                             ],
                         ],
                         'output_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
                                 'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
                             ],
                         ],
                     ],
@@ -110,25 +74,13 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                         'input' => null,
                         'output' => null,
                         'input_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
                                 'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
                             ],
                         ],
                         'output_formats' => [
-                            'jsonld' => [
-                                'application/ld+json',
-                            ],
                             'json' => [
                                 'application/json',
-                            ],
-                            'html' => [
-                                'text/html',
                             ],
                         ],
                     ],

@@ -56,12 +56,10 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 4 => [
                     'security' => 'is_granted(\'ROLE_ADMIN\')',
                     'security_message' => 'Accès refusé!',
-                    'pagination_enabled' => true,
-                    'pagination_items_per_page' => 5,
                     'route_prefix' => '/admin',
                     'normalization_context' => [
                         'groups' => [
-                            'profil:read',
+                            'user:read',
                         ],
                     ],
                 ],

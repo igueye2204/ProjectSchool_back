@@ -55,11 +55,6 @@ class Competence
      */
     private $libelle;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     */
-    private $descriptif;
 
     /**
      * @ORM\ManyToMany(targetEntity=GroupeCompetence::class, inversedBy="competences")
@@ -95,17 +90,6 @@ class Competence
         return $this;
     }
 
-    public function getDescriptif(): ?string
-    {
-        return $this->descriptif;
-    }
-
-    public function setDescriptif(string $descriptif): self
-    {
-        $this->descriptif = $descriptif;
-
-        return $this;
-    }
 
     /**
      * @return Collection|GroupeCompetence[]

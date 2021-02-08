@@ -1,0 +1,51 @@
+<?php //Symfony_Component_HttpKernel_Exception_BadRequestHttpException
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Serializer\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\ClassMetadata')),
+        clone ($p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata')),
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'Symfony\\Component\\HttpKernel\\Exception\\BadRequestHttpException',
+                'message',
+                'code',
+                'file',
+                'line',
+                'statusCode',
+                'headers',
+                'string',
+                'trace',
+                'previous',
+                'traceAsString',
+            ],
+            'attributesMetadata' => [
+                [
+                    'message' => $o[1],
+                    'code' => $o[2],
+                    'file' => $o[3],
+                    'line' => $o[4],
+                    'statusCode' => $o[5],
+                    'headers' => $o[6],
+                    'string' => $o[7],
+                    'trace' => $o[8],
+                    'previous' => $o[9],
+                    'traceAsString' => $o[10],
+                ],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); }];

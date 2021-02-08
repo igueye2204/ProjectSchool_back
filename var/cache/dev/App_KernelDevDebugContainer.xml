@@ -19,6 +19,7 @@
       <parameter key="LexikJWTAuthenticationBundle">Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle</parameter>
       <parameter key="VichUploaderBundle">Vich\UploaderBundle\VichUploaderBundle</parameter>
       <parameter key="PhpSpreadsheetBundle">Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle</parameter>
+      <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
@@ -68,6 +69,10 @@
       <parameter key="PhpSpreadsheetBundle" type="collection">
         <parameter key="path">/home/ibou/filrouge_reprise/vendor/yectep/phpspreadsheet-bundle/src</parameter>
         <parameter key="namespace">Yectep\PhpSpreadsheetBundle</parameter>
+      </parameter>
+      <parameter key="DebugBundle" type="collection">
+        <parameter key="path">/home/ibou/filrouge_reprise/vendor/symfony/debug-bundle</parameter>
+        <parameter key="namespace">Symfony\Bundle\DebugBundle</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -263,14 +268,8 @@
       <parameter key="Doctrine\ORM\OptimisticLockException">409</parameter>
     </parameter>
     <parameter key="api_platform.formats" type="collection">
-      <parameter key="jsonld" type="collection">
-        <parameter>application/ld+json</parameter>
-      </parameter>
       <parameter key="json" type="collection">
         <parameter>application/json</parameter>
-      </parameter>
-      <parameter key="html" type="collection">
-        <parameter>text/html</parameter>
       </parameter>
     </parameter>
     <parameter key="api_platform.patch_formats" type="collection">
@@ -297,21 +296,21 @@
     <parameter key="api_platform.collection.pagination.enabled">true</parameter>
     <parameter key="api_platform.collection.pagination.partial">false</parameter>
     <parameter key="api_platform.collection.pagination.client_enabled">false</parameter>
-    <parameter key="api_platform.collection.pagination.client_items_per_page">true</parameter>
+    <parameter key="api_platform.collection.pagination.client_items_per_page">false</parameter>
     <parameter key="api_platform.collection.pagination.client_partial">false</parameter>
-    <parameter key="api_platform.collection.pagination.items_per_page">2</parameter>
+    <parameter key="api_platform.collection.pagination.items_per_page">30</parameter>
     <parameter key="api_platform.collection.pagination.maximum_items_per_page">null</parameter>
     <parameter key="api_platform.collection.pagination.page_parameter_name">page</parameter>
     <parameter key="api_platform.collection.pagination.enabled_parameter_name">pagination</parameter>
     <parameter key="api_platform.collection.pagination.items_per_page_parameter_name">itemsPerPage</parameter>
     <parameter key="api_platform.collection.pagination.partial_parameter_name">partial</parameter>
     <parameter key="api_platform.collection.pagination" type="collection">
-      <parameter key="items_per_page">2</parameter>
-      <parameter key="client_items_per_page">true</parameter>
       <parameter key="enabled">true</parameter>
       <parameter key="partial">false</parameter>
       <parameter key="client_enabled">false</parameter>
+      <parameter key="client_items_per_page">false</parameter>
       <parameter key="client_partial">false</parameter>
+      <parameter key="items_per_page">30</parameter>
       <parameter key="maximum_items_per_page">null</parameter>
       <parameter key="page_parameter_name">page</parameter>
       <parameter key="enabled_parameter_name">pagination</parameter>
@@ -385,6 +384,7 @@
     </parameter>
     <parameter key="vich_uploader.file_injector.class">Vich\UploaderBundle\Injector\FileInjector</parameter>
     <parameter key="phpofficebundle_spreadsheet_class">Yectep\PhpSpreadsheetBundle\Factory</parameter>
+    <parameter key="env(VAR_DUMPER_SERVER)">127.0.0.1:9912</parameter>
     <parameter key="console.command.ids" type="collection">
       <parameter>console.command.public_alias.api_platform.json_schema.json_schema_generate_command</parameter>
       <parameter>console.command.public_alias.api_platform.swagger.command.swagger_command</parameter>
@@ -422,6 +422,13 @@
       <tag name="container.service_subscriber"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.g9CqTPp.App\Controller\ProfilController"/>
+      </call>
+    </service>
+    <service id="App\Controller\ProfilSortieController" class="App\Controller\ProfilSortieController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.g9CqTPp.App\Controller\ProfilSortieController"/>
       </call>
     </service>
     <service id="App\Controller\TagController" class="App\Controller\TagController" public="true" autowire="true" autoconfigure="true">
@@ -1635,14 +1642,6 @@
       <call method="addListener">
         <argument>kernel.response</argument>
         <argument type="collection">
-          <argument type="service" id="api_platform.hydra.listener.response.add_link_header"/>
-          <argument>onKernelResponse</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.response</argument>
-        <argument type="collection">
           <argument type="service" id="api_platform.http_cache.listener.response.configure"/>
           <argument>onKernelResponse</argument>
         </argument>
@@ -1937,6 +1936,14 @@
         <argument>0</argument>
       </call>
       <call method="addListener">
+        <argument>console.command</argument>
+        <argument type="collection">
+          <argument type="service" id="debug.dump_listener"/>
+          <argument>configure</argument>
+        </argument>
+        <argument>1024</argument>
+      </call>
+      <call method="addListener">
         <argument>Symfony\Component\Security\Http\Event\LogoutEvent</argument>
         <argument type="collection">
           <argument type="service" id="security.logout.listener.csrf_token_clearing"/>
@@ -2175,15 +2182,10 @@
       <argument type="collection">
         <argument type="service" id="serializer.denormalizer.unwrapping"/>
         <argument type="service" id="api_platform.swagger.normalizer.api_gateway"/>
-        <argument type="service" id="api_platform.hydra.normalizer.constraint_violation_list"/>
         <argument type="service" id="api_platform.problem.normalizer.constraint_violation_list"/>
         <argument type="service" id="api_platform.swagger.normalizer.api_gateway"/>
-        <argument type="service" id="api_platform.hydra.normalizer.documentation"/>
-        <argument type="service" id="api_platform.hydra.normalizer.entrypoint"/>
-        <argument type="service" id="api_platform.hydra.normalizer.error"/>
         <argument type="service" id="api_platform.problem.normalizer.error"/>
         <argument type="service" id="serializer.normalizer.problem"/>
-        <argument type="service" id="api_platform.jsonld.normalizer.item"/>
         <argument type="service" id="api_platform.serializer.normalizer.item"/>
         <argument type="service" id="serializer.normalizer.json_serializable"/>
         <argument type="service" id="serializer.normalizer.datetime"/>
@@ -2191,9 +2193,7 @@
         <argument type="service" id="serializer.normalizer.datetimezone"/>
         <argument type="service" id="serializer.normalizer.dateinterval"/>
         <argument type="service" id="serializer.normalizer.data_uri"/>
-        <argument type="service" id="api_platform.hydra.normalizer.collection_filters"/>
         <argument type="service" id="serializer.denormalizer.array"/>
-        <argument type="service" id="api_platform.jsonld.normalizer.object"/>
         <argument type="service" id="serializer.normalizer.object"/>
       </argument>
       <argument type="collection">
@@ -2201,7 +2201,6 @@
         <argument type="service" id="serializer.encoder.json"/>
         <argument type="service" id="serializer.encoder.yaml"/>
         <argument type="service" id="serializer.encoder.csv"/>
-        <argument type="service" id="api_platform.jsonld.encoder"/>
         <argument type="service" id="api_platform.problem.encoder"/>
       </argument>
     </service>
@@ -2557,7 +2556,7 @@
         <argument type="service" id="twig.extension.security"/>
       </call>
       <call method="addExtension">
-        <argument type="service" id="twig.extension.debug"/>
+        <argument type="service" id="twig.extension.dump"/>
       </call>
       <call method="addExtension">
         <argument type="service" id="doctrine.twig.doctrine_extension"/>
@@ -2638,6 +2637,14 @@
         <argument>!VichUploader</argument>
       </call>
       <call method="addPath">
+        <argument>/home/ibou/filrouge_reprise/vendor/symfony/debug-bundle/Resources/views</argument>
+        <argument>Debug</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/ibou/filrouge_reprise/vendor/symfony/debug-bundle/Resources/views</argument>
+        <argument>!Debug</argument>
+      </call>
+      <call method="addPath">
         <argument>/home/ibou/filrouge_reprise/templates</argument>
       </call>
       <call method="addPath">
@@ -2696,9 +2703,7 @@
       <tag name="twig.extension"/>
       <argument type="service" id="url_helper"/>
     </service>
-    <service id="twig.extension.debug" class="Twig\Extension\DebugExtension" public="false">
-      <tag name="twig.extension"/>
-    </service>
+    <service id="twig.extension.debug" class="Twig\Extension\DebugExtension" public="false"/>
     <service id="twig.extension.weblink" class="Symfony\Bridge\Twig\Extension\WebLinkExtension" public="false">
       <tag name="twig.extension"/>
       <argument type="service" id="request_stack"/>
@@ -4346,13 +4351,21 @@
     <service id="api_platform.json_schema.type_factory" class="ApiPlatform\Core\JsonSchema\TypeFactory" public="false">
       <argument type="service" id="api_platform.resource_class_resolver"/>
       <call method="setSchemaFactory">
-        <argument type="service" id="api_platform.hydra.json_schema.schema_factory"/>
+        <argument type="service" id="api_platform.json_schema.schema_factory"/>
       </call>
+    </service>
+    <service id="api_platform.json_schema.schema_factory" class="ApiPlatform\Core\JsonSchema\SchemaFactory" public="false">
+      <argument type="service" id="api_platform.json_schema.type_factory"/>
+      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
+      <argument type="service" id="api_platform.metadata.property.name_collection_factory.cached"/>
+      <argument type="service" id="api_platform.metadata.property.metadata_factory.cached"/>
+      <argument type="service" id="serializer.name_converter.metadata_aware" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.resource_class_resolver"/>
     </service>
     <service id="api_platform.json_schema.json_schema_generate_command" class="ApiPlatform\Core\JsonSchema\Command\JsonSchemaGenerateCommand" public="false">
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
-      <argument type="service" id="api_platform.hydra.json_schema.schema_factory"/>
+      <argument type="service" id="api_platform.json_schema.schema_factory"/>
       <argument>%api_platform.formats%</argument>
     </service>
     <service id="api_platform.swagger.normalizer.api_gateway" class="ApiPlatform\Core\Swagger\Serializer\ApiGatewayNormalizer" public="false">
@@ -4399,93 +4412,6 @@
       <argument>false</argument>
       <argument>false</argument>
       <argument>%api_platform.swagger.versions%</argument>
-    </service>
-    <service id="api_platform.jsonld.context_builder" class="ApiPlatform\Core\JsonLd\ContextBuilder" public="false">
-      <argument type="service" id="api_platform.metadata.resource.name_collection_factory.cached"/>
-      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
-      <argument type="service" id="api_platform.metadata.property.name_collection_factory.cached"/>
-      <argument type="service" id="api_platform.metadata.property.metadata_factory.cached"/>
-      <argument type="service" id="api_platform.router"/>
-    </service>
-    <service id="api_platform.jsonld.normalizer.item" class="ApiPlatform\Core\JsonLd\Serializer\ItemNormalizer" public="false">
-      <tag name="serializer.normalizer" priority="-890"/>
-      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
-      <argument type="service" id="api_platform.metadata.property.name_collection_factory.cached"/>
-      <argument type="service" id="api_platform.metadata.property.metadata_factory.cached"/>
-      <argument type="service" id="api_platform.iri_converter"/>
-      <argument type="service" id="api_platform.resource_class_resolver"/>
-      <argument type="service" id="api_platform.jsonld.context_builder"/>
-      <argument type="service" id="property_accessor"/>
-      <argument type="service" id="serializer.name_converter.metadata_aware" on-invalid="ignore"/>
-      <argument type="service" id="serializer.mapping.cache_class_metadata_factory" on-invalid="ignore"/>
-      <argument type="collection"/>
-      <argument type="tagged_iterator" tag="api_platform.data_transformer"/>
-      <argument>false</argument>
-    </service>
-    <service id="api_platform.jsonld.normalizer.object" class="ApiPlatform\Core\JsonLd\Serializer\ObjectNormalizer" public="false">
-      <tag name="serializer.normalizer" priority="-995"/>
-      <argument type="service" id="serializer.normalizer.object"/>
-      <argument type="service" id="api_platform.iri_converter"/>
-      <argument type="service" id="api_platform.jsonld.context_builder"/>
-    </service>
-    <service id="api_platform.jsonld.encoder" class="ApiPlatform\Core\Serializer\JsonEncoder" public="false">
-      <tag name="serializer.encoder"/>
-      <argument>jsonld</argument>
-    </service>
-    <service id="api_platform.jsonld.action.context" class="ApiPlatform\Core\JsonLd\Action\ContextAction" public="true">
-      <argument type="service" id="api_platform.jsonld.context_builder"/>
-      <argument type="service" id="api_platform.metadata.resource.name_collection_factory.cached"/>
-      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
-    </service>
-    <service id="api_platform.hydra.normalizer.documentation" class="ApiPlatform\Core\Hydra\Serializer\DocumentationNormalizer" public="false">
-      <tag name="serializer.normalizer" priority="-800"/>
-      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
-      <argument type="service" id="api_platform.metadata.property.name_collection_factory.cached"/>
-      <argument type="service" id="api_platform.metadata.property.metadata_factory.cached"/>
-      <argument type="service" id="api_platform.resource_class_resolver"/>
-      <argument>null</argument>
-      <argument type="service" id="api_platform.router"/>
-      <argument type="service" id="api_platform.subresource_operation_factory.cached"/>
-      <argument type="service" id="serializer.name_converter.metadata_aware" on-invalid="ignore"/>
-    </service>
-    <service id="api_platform.hydra.listener.response.add_link_header" class="ApiPlatform\Core\Hydra\EventListener\AddLinkHeaderListener">
-      <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse"/>
-      <tag name="container.hot_path"/>
-      <argument type="service" id="api_platform.router"/>
-    </service>
-    <service id="api_platform.hydra.normalizer.constraint_violation_list" class="ApiPlatform\Core\Hydra\Serializer\ConstraintViolationListNormalizer" public="false">
-      <tag name="serializer.normalizer" priority="-780"/>
-      <argument type="service" id="api_platform.router"/>
-      <argument type="collection"/>
-      <argument type="service" id="serializer.name_converter.metadata_aware" on-invalid="ignore"/>
-    </service>
-    <service id="api_platform.hydra.normalizer.entrypoint" class="ApiPlatform\Core\Hydra\Serializer\EntrypointNormalizer" public="false">
-      <tag name="serializer.normalizer" priority="-800"/>
-      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
-      <argument type="service" id="api_platform.iri_converter"/>
-      <argument type="service" id="api_platform.router"/>
-    </service>
-    <service id="api_platform.hydra.normalizer.error" class="ApiPlatform\Core\Hydra\Serializer\ErrorNormalizer" public="false">
-      <tag name="serializer.normalizer" priority="-800"/>
-      <argument type="service" id="api_platform.router"/>
-      <argument>true</argument>
-    </service>
-    <service id="api_platform.hydra.normalizer.partial_collection_view" class="ApiPlatform\Core\Hydra\Serializer\PartialCollectionViewNormalizer" public="false">
-      <argument type="service" id="api_platform.hydra.normalizer.partial_collection_view.inner"/>
-      <argument>page</argument>
-      <argument>pagination</argument>
-      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
-      <argument type="service" id="property_accessor"/>
-    </service>
-    <service id="api_platform.hydra.normalizer.collection_filters" class="ApiPlatform\Core\Hydra\Serializer\CollectionFiltersNormalizer" public="false">
-      <tag name="serializer.normalizer" priority="-985"/>
-      <argument type="service" id="api_platform.hydra.normalizer.partial_collection_view"/>
-      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
-      <argument type="service" id="api_platform.resource_class_resolver"/>
-      <argument type="service" id="api_platform.filter_locator"/>
-    </service>
-    <service id="api_platform.hydra.json_schema.schema_factory" class="ApiPlatform\Core\Hydra\JsonSchema\SchemaFactory">
-      <argument type="service" id="api_platform.hydra.json_schema.schema_factory.inner"/>
     </service>
     <service id="api_platform.problem.encoder" class="ApiPlatform\Core\Serializer\JsonEncoder" public="false">
       <tag name="serializer.encoder"/>
@@ -5254,6 +5180,103 @@
       <argument type="service" id="vich_uploader.upload_handler"/>
     </service>
     <service id="phpoffice.spreadsheet" class="Yectep\PhpSpreadsheetBundle\Factory" public="true"/>
+    <service id=".6_HtmlDescriptor~9PyKC2L" class="Symfony\Component\VarDumper\Command\Descriptor\HtmlDescriptor" public="false">
+      <argument type="service" id="var_dumper.html_dumper"/>
+    </service>
+    <service id=".5_CliDescriptor~9PyKC2L" class="Symfony\Component\VarDumper\Command\Descriptor\CliDescriptor" public="false">
+      <argument type="service" id="var_dumper.contextualized_cli_dumper.inner"/>
+    </service>
+    <service id=".4_CliContextProvider~9PyKC2L" class="Symfony\Component\VarDumper\Dumper\ContextProvider\CliContextProvider" public="false"/>
+    <service id=".3_RequestContextProvider~9PyKC2L" class="Symfony\Component\VarDumper\Dumper\ContextProvider\RequestContextProvider" public="false">
+      <argument type="service" id="request_stack"/>
+    </service>
+    <service id=".2_SourceContextProvider~9PyKC2L" class="Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider" public="false">
+      <argument>UTF-8</argument>
+      <argument>/home/ibou/filrouge_reprise</argument>
+      <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
+    </service>
+    <service id=".1_SourceContextProvider~9PyKC2L" class="Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider" public="false">
+      <argument>UTF-8</argument>
+      <argument>/home/ibou/filrouge_reprise</argument>
+      <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
+    </service>
+    <service id="twig.extension.dump" class="Symfony\Bridge\Twig\Extension\DumpExtension" public="false">
+      <tag name="twig.extension"/>
+      <argument type="service" id="var_dumper.cloner"/>
+      <argument type="service" id="var_dumper.html_dumper"/>
+    </service>
+    <service id="data_collector.dump" class="Symfony\Component\HttpKernel\DataCollector\DumpDataCollector" public="true">
+      <tag name="data_collector" id="dump" template="@Debug/Profiler/dump.html.twig" priority="240"/>
+      <argument type="service" id="debug.stopwatch" on-invalid="ignore"/>
+      <argument type="service" id="debug.file_link_formatter" on-invalid="ignore"/>
+      <argument>UTF-8</argument>
+      <argument>null</argument>
+      <argument type="service" id="var_dumper.server_connection"/>
+    </service>
+    <service id="debug.dump_listener" class="Symfony\Component\HttpKernel\EventListener\DumpListener" public="false">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="var_dumper.cloner"/>
+      <argument type="service" id="var_dumper.contextualized_cli_dumper"/>
+      <argument type="service" id="var_dumper.server_connection"/>
+    </service>
+    <service id="var_dumper.cloner" class="Symfony\Component\VarDumper\Cloner\VarCloner" public="true">
+      <call method="setMaxItems">
+        <argument>2500</argument>
+      </call>
+      <call method="setMinDepth">
+        <argument>1</argument>
+      </call>
+      <call method="setMaxString">
+        <argument>-1</argument>
+      </call>
+      <call method="addCasters">
+        <argument type="collection">
+          <argument key="Closure">Symfony\Component\VarDumper\Caster\ReflectionCaster::unsetClosureFileInfo</argument>
+        </argument>
+      </call>
+    </service>
+    <service id="var_dumper.contextualized_cli_dumper" class="Symfony\Component\VarDumper\Dumper\ContextualizedDumper" public="false">
+      <argument type="service" id="var_dumper.contextualized_cli_dumper.inner"/>
+      <argument type="collection">
+        <argument key="source" type="service" id=".1_SourceContextProvider~9PyKC2L"/>
+      </argument>
+    </service>
+    <service id="var_dumper.html_dumper" class="Symfony\Component\VarDumper\Dumper\HtmlDumper" public="false">
+      <argument>null</argument>
+      <argument>UTF-8</argument>
+      <argument>0</argument>
+      <call method="setDisplayOptions">
+        <argument type="collection">
+          <argument key="fileLinkFormat" type="service" id="debug.file_link_formatter" on-invalid="ignore"/>
+        </argument>
+      </call>
+    </service>
+    <service id="var_dumper.server_connection" class="Symfony\Component\VarDumper\Server\Connection" public="false">
+      <argument>tcp://%env(VAR_DUMPER_SERVER)%</argument>
+      <argument type="collection">
+        <argument key="source" type="service" id=".2_SourceContextProvider~9PyKC2L"/>
+        <argument key="request" type="service" id=".3_RequestContextProvider~9PyKC2L"/>
+        <argument key="cli" type="service" id=".4_CliContextProvider~9PyKC2L"/>
+      </argument>
+    </service>
+    <service id="var_dumper.dump_server" class="Symfony\Component\VarDumper\Server\DumpServer" public="false">
+      <tag name="monolog.logger" channel="debug"/>
+      <argument>tcp://%env(VAR_DUMPER_SERVER)%</argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+    </service>
+    <service id="var_dumper.command.server_dump" class="Symfony\Component\VarDumper\Command\ServerDumpCommand" public="false">
+      <tag name="console.command" command="server:dump"/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="var_dumper.dump_server"/>
+      <argument type="collection">
+        <argument key="cli" type="service" id=".5_CliDescriptor~9PyKC2L"/>
+        <argument key="html" type="service" id=".6_HtmlDescriptor~9PyKC2L"/>
+      </argument>
+      <call method="setName">
+        <argument>server:dump</argument>
+      </call>
+    </service>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ApprenantController" class="App\Controller\ApprenantController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ApprenantController" class="App\Controller\ApprenantController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\ApprenantController" class="App\Controller\ApprenantController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -5266,6 +5289,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ProfilController" class="App\Controller\ProfilController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ProfilController" class="App\Controller\ProfilController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\ProfilController" class="App\Controller\ProfilController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ProfilSortieController" class="App\Controller\ProfilSortieController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ProfilSortieController" class="App\Controller\ProfilSortieController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\ProfilSortieController" class="App\Controller\ProfilSortieController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\TagController" class="App\Controller\TagController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\TagController" class="App\Controller\TagController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\TagController" class="App\Controller\TagController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -5575,10 +5601,11 @@
         <argument key="serializer" type="service" id="serializer"/>
       </argument>
     </service>
-    <service id=".service_locator.WzYPJck" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.bVy_Y5a" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
+        <argument key="repo" type="service" id="App\Repository\CompetenceRepository"/>
         <argument key="serializer" type="service" id="serializer"/>
       </argument>
     </service>
@@ -5600,22 +5627,26 @@
         <argument key="validator" type="service" id="validator"/>
       </argument>
     </service>
-    <service id=".service_locator.soTXMSr" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.aNX5z1N" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="denormalizer" type="service" id="serializer"/>
+        <argument key="encoder" type="service" id="security.user_password_encoder.generic"/>
         <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
+        <argument key="repo" type="service" id="App\Repository\UserRepository"/>
         <argument key="serializer" type="service" id="serializer"/>
         <argument key="serve" type="service" id="App\Service\MyService"/>
       </argument>
     </service>
-    <service id=".service_locator.yqoYghk" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.eojNFxr" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\CompetenceController::addCompetence" type="service" id=".service_locator.XJm310N"/>
-        <argument key="App\Controller\GroupeCompetenceController::addGrpCompetence" type="service" id=".service_locator.WzYPJck"/>
+        <argument key="App\Controller\GroupeCompetenceController::addGrpCompetence" type="service" id=".service_locator.bVy_Y5a"/>
         <argument key="App\Controller\ProfilController::addProfil" type="service" id=".service_locator.19ps0qC"/>
+        <argument key="App\Controller\ProfilSortieController::addProfilSortie" type="service" id=".service_locator.19ps0qC"/>
         <argument key="App\Controller\USerController::addUser" type="service" id=".service_locator.xPCyVuZ"/>
-        <argument key="App\Controller\USerController::updateUser" type="service" id=".service_locator.soTXMSr"/>
+        <argument key="App\Controller\USerController::updateUser" type="service" id=".service_locator.aNX5z1N"/>
         <argument key="App\Kernel::loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="App\Kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
@@ -5623,10 +5654,11 @@
         <argument key="kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
         <argument key="App\Controller\CompetenceController:addCompetence" type="service" id=".service_locator.XJm310N"/>
-        <argument key="App\Controller\GroupeCompetenceController:addGrpCompetence" type="service" id=".service_locator.WzYPJck"/>
+        <argument key="App\Controller\GroupeCompetenceController:addGrpCompetence" type="service" id=".service_locator.bVy_Y5a"/>
         <argument key="App\Controller\ProfilController:addProfil" type="service" id=".service_locator.19ps0qC"/>
+        <argument key="App\Controller\ProfilSortieController:addProfilSortie" type="service" id=".service_locator.19ps0qC"/>
         <argument key="App\Controller\USerController:addUser" type="service" id=".service_locator.xPCyVuZ"/>
-        <argument key="App\Controller\USerController:updateUser" type="service" id=".service_locator.soTXMSr"/>
+        <argument key="App\Controller\USerController:updateUser" type="service" id=".service_locator.aNX5z1N"/>
         <argument key="kernel:loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel:registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel:terminate" type="service" id=".service_locator.beq5mCo"/>
@@ -5791,6 +5823,12 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.g9CqTPp" method="withContext"/>
     </service>
+    <service id=".service_locator.g9CqTPp.App\Controller\ProfilSortieController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\ProfilSortieController"/>
+      <argument>App\Controller\ProfilSortieController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.g9CqTPp" method="withContext"/>
+    </service>
     <service id=".service_locator.g9CqTPp.App\Controller\TagController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator_context" id="App\Controller\TagController"/>
       <argument>App\Controller\TagController</argument>
@@ -5921,19 +5959,6 @@
       <argument type="service" id="property_accessor"/>
       <argument type="service" id="api_platform.resource_class_resolver"/>
     </service>
-    <service id="api_platform.hydra.normalizer.partial_collection_view.inner" class="ApiPlatform\Core\Hydra\Serializer\CollectionNormalizer" public="false">
-      <argument type="service" id="api_platform.jsonld.context_builder"/>
-      <argument type="service" id="api_platform.resource_class_resolver"/>
-      <argument type="service" id="api_platform.iri_converter"/>
-    </service>
-    <service id="api_platform.hydra.json_schema.schema_factory.inner" class="ApiPlatform\Core\JsonSchema\SchemaFactory" public="false">
-      <argument type="service" id="api_platform.json_schema.type_factory"/>
-      <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
-      <argument type="service" id="api_platform.metadata.property.name_collection_factory.cached"/>
-      <argument type="service" id="api_platform.metadata.property.metadata_factory.cached"/>
-      <argument type="service" id="serializer.name_converter.metadata_aware" on-invalid="ignore"/>
-      <argument type="service" id="api_platform.resource_class_resolver"/>
-    </service>
     <service id="debug.api_platform.collection_data_provider.inner" class="ApiPlatform\Core\DataProvider\ChainCollectionDataProvider" public="false">
       <argument type="tagged_iterator" tag="api_platform.collection_data_provider"/>
     </service>
@@ -5946,6 +5971,16 @@
     <service id="debug.api_platform.data_persister.inner" class="ApiPlatform\Core\DataPersister\ChainDataPersister" public="false">
       <argument type="tagged_iterator" tag="api_platform.data_persister"/>
     </service>
+    <service id="var_dumper.contextualized_cli_dumper.inner" class="Symfony\Component\VarDumper\Dumper\CliDumper" public="false">
+      <argument>null</argument>
+      <argument>UTF-8</argument>
+      <argument>0</argument>
+      <call method="setDisplayOptions">
+        <argument type="collection">
+          <argument key="fileLinkFormat" type="service" id="debug.file_link_formatter" on-invalid="ignore"/>
+        </argument>
+      </call>
+    </service>
     <service id="debug.argument_resolver.request_attribute.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver" public="false"/>
     <service id="debug.argument_resolver.request.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver" public="false"/>
     <service id="debug.argument_resolver.session.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver" public="false"/>
@@ -5953,18 +5988,18 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.yqoYghk"/>
+      <argument type="service" id=".service_locator.eojNFxr"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.yqoYghk"/>
+      <argument type="service" id=".service_locator.eojNFxr"/>
     </service>
     <service id="api_platform.swagger.normalizer.api_gateway.inner" class="ApiPlatform\Core\Swagger\Serializer\DocumentationNormalizer" public="false">
       <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
       <argument type="service" id="api_platform.metadata.property.name_collection_factory.cached"/>
       <argument type="service" id="api_platform.metadata.property.metadata_factory.cached"/>
-      <argument type="service" id="api_platform.hydra.json_schema.schema_factory"/>
+      <argument type="service" id="api_platform.json_schema.schema_factory"/>
       <argument type="service" id="api_platform.json_schema.type_factory"/>
       <argument type="service" id="api_platform.operation_path_resolver.router"/>
       <argument>null</argument>
@@ -5980,7 +6015,7 @@
       <argument type="service" id="api_platform.subresource_operation_factory.cached"/>
       <argument>true</argument>
       <argument>page</argument>
-      <argument>true</argument>
+      <argument>false</argument>
       <argument>itemsPerPage</argument>
       <argument>%api_platform.formats%</argument>
       <argument>false</argument>
@@ -6001,7 +6036,7 @@
     <service id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
-      <argument type="service" id=".service_locator.BKXyjW_"/>
+      <argument type="service" id=".service_locator..wqvR7b"/>
       <argument type="collection">
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
@@ -6068,6 +6103,7 @@
         <argument key="vich:mapping:debug-class">vich_uploader.command.mapping_debug_class</argument>
         <argument key="vich:mapping:debug">vich_uploader.command.mapping_debug</argument>
         <argument key="vich:mapping:list-classes">vich_uploader.command.mapping_list_classes</argument>
+        <argument key="server:dump">var_dumper.command.server_dump</argument>
         <argument key="make:auth">maker.auto_command.make_auth</argument>
         <argument key="make:command">maker.auto_command.make_command</argument>
         <argument key="make:controller">maker.auto_command.make_controller</argument>
@@ -6092,7 +6128,7 @@
         <argument key="make:migration">maker.auto_command.make_migration</argument>
       </argument>
     </service>
-    <service id=".service_locator.BKXyjW_" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator..wqvR7b" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="console.command.about" type="service" id="console.command.about"/>
@@ -6179,6 +6215,7 @@
         <argument key="security.command.user_password_encoder" type="service" id="security.command.user_password_encoder"/>
         <argument key="twig.command.debug" type="service" id="twig.command.debug"/>
         <argument key="twig.command.lint" type="service" id="twig.command.lint"/>
+        <argument key="var_dumper.command.server_dump" type="service" id="var_dumper.command.server_dump"/>
         <argument key="vich_uploader.command.mapping_debug" type="service" id="vich_uploader.command.mapping_debug"/>
         <argument key="vich_uploader.command.mapping_debug_class" type="service" id="vich_uploader.command.mapping_debug_class"/>
         <argument key="vich_uploader.command.mapping_list_classes" type="service" id="vich_uploader.command.mapping_list_classes"/>
@@ -6351,7 +6388,7 @@
     <service id="api_platform.metadata.resource.metadata_factory" alias="api_platform.metadata.resource.metadata_factory.cached"/>
     <service id="api_platform.metadata.property.metadata_factory" alias="api_platform.metadata.property.metadata_factory.cached"/>
     <service id="ApiPlatform\Core\JsonSchema\TypeFactoryInterface" alias="api_platform.json_schema.type_factory" public="false"/>
-    <service id="ApiPlatform\Core\JsonSchema\SchemaFactoryInterface" alias="api_platform.hydra.json_schema.schema_factory" public="false"/>
+    <service id="ApiPlatform\Core\JsonSchema\SchemaFactoryInterface" alias="api_platform.json_schema.schema_factory" public="false"/>
     <service id="ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter" alias="api_platform.doctrine.orm.search_filter"/>
     <service id="ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter" alias="api_platform.doctrine.orm.order_filter"/>
     <service id="ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter" alias="api_platform.doctrine.orm.range_filter"/>
@@ -6400,7 +6437,7 @@
     <service id="Yectep\PhpSpreadsheetBundle\Factory" alias="phpoffice.spreadsheet"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.yqoYghk"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.eojNFxr"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="api_platform.name_converter" alias="serializer.name_converter.metadata_aware"/>
     <service id="Psr\Log\LoggerInterface" alias="logger" public="false"/>
@@ -6436,13 +6473,11 @@
     <service id="api_platform.metadata.resource.name_collection_factory.annotation.inner" alias="api_platform.metadata.resource.name_collection_factory.xml" public="false"/>
     <service id="api_platform.metadata.resource.name_collection_factory.yaml.inner" alias="api_platform.metadata.resource.name_collection_factory.annotation" public="false"/>
     <service id="api_platform.metadata.property.name_collection_factory.yaml.inner" alias="api_platform.metadata.property.name_collection_factory.xml" public="false"/>
-    <service id="api_platform.hydra.normalizer.collection" alias="api_platform.hydra.normalizer.collection_filters" public="false"/>
-    <service id="api_platform.hydra.normalizer.collection_filters.inner" alias="api_platform.hydra.normalizer.partial_collection_view" public="false"/>
-    <service id="api_platform.json_schema.schema_factory" alias="api_platform.hydra.json_schema.schema_factory" public="false"/>
     <service id="api_platform.collection_data_provider" alias="debug.api_platform.collection_data_provider"/>
     <service id="api_platform.item_data_provider" alias="debug.api_platform.item_data_provider"/>
     <service id="api_platform.subresource_data_provider" alias="debug.api_platform.subresource_data_provider"/>
     <service id="api_platform.data_persister" alias="debug.api_platform.data_persister" public="false"/>
+    <service id="var_dumper.cli_dumper" alias="var_dumper.contextualized_cli_dumper" public="false"/>
     <service id="argument_resolver.request_attribute" alias="debug.argument_resolver.request_attribute" public="false"/>
     <service id="argument_resolver.request" alias="debug.argument_resolver.request" public="false"/>
     <service id="argument_resolver.session" alias="debug.argument_resolver.session" public="false"/>

@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Profil;
+use App\Repository\UserRepository;
 use App\Service\MyService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -41,7 +42,7 @@ class USerController extends AbstractController
      * @param SerializerInterface $serializer
      * @return JsonResponse|Response
      */
-    public function addUser(Myservice $serve,DenormalizerInterface $denormalizer,EntityManagerInterface $manager, ValidatorInterface $validator, Request $request, UserPasswordEncoderInterface $encoder)
+    public function addUser(Myservice $serve, DenormalizerInterface $denormalizer, EntityManagerInterface $manager, ValidatorInterface $validator, Request $request, UserPasswordEncoderInterface $encoder)
     {
         //$newUser = json_decode($request->getContent(), true);
         $newUser = $request->request->all();
@@ -70,10 +71,10 @@ class USerController extends AbstractController
             $manager->persist($user);
             $manager->flush();
 
-        return new JsonResponse("success", Response::HTTP_CREATED, [], true);
+            return new JsonResponse("success", Response::HTTP_CREATED, [], true);
 
         }else{
-           return new BadRequestHttpException("Ce profil n'éxiste pas");
+            return new BadRequestHttpException("Ce profil n'éxiste pas");
         }
 
     }
@@ -89,20 +90,33 @@ class USerController extends AbstractController
      *      }
      *    )
      */
-    public function updateUser(MyService $serve, Request $request, SerializerInterface $serializer, EntityManagerInterface $manager){
+    public function updateUser(MyService $serve, Request $request,UserPasswordEncoderInterface $encoder ,DenormalizerInterface $denormalizer, SerializerInterface $serializer, UserRepository $repo, EntityManagerInterface $manager){
         //Récuperation de l'objet dans la base de données
         $userData = $request->attributes->get("data");
-        $data = $serve->putData($request, 'avatar');
-        foreach ($data as $k => $v) {
-            $setter = 'set' . ucfirst($k);
-            if (!method_exists($userData, $setter)) {
-                return new Response("La méthode $setter() n'éxiste pas dans l'entité User");
-            }
-            $userData->$setter($v);
-        }
-        $manager->persist($userData);
-        $manager->flush();
+        $userId = $request->attributes->get("id");
 
-        return new JsonResponse("success", Response::HTTP_CREATED, [], true);
+        $data = $serve->putData($request, 'avatar');
+
+        $user = $repo->find($userId);
+        if (!$user) {
+            new Response(
+                "l'utilisateurs non trouvée avec l’id " . $userId
+            );
+        }else{
+
+            foreach ($data as $k => $v) {
+                $setter = 'set' . ucfirst($k);
+                if (!method_exists($userData, $setter)) {
+                    return new Response("La méthode $setter() n'éxiste pas dans l'entité User");
+                }
+                $userData->$setter($v);
+            }
+
+                $manager->persist($userData);
+                $manager->flush();
+
+                return new JsonResponse("success", Response::HTTP_CREATED, [], true);
+
+        }
     }
 }

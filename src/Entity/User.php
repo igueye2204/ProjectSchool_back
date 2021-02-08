@@ -20,16 +20,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ApiResource(
  *     routePrefix="/admin",
  *
- *  normalizationContext={
- *      "groups"={
- *          "profil:read"
- *      }
- *  },
- *  attributes = {
+ *  normalizationContext={"groups"={"user:read"}},
+ *     attributes = {
+ *
  *      "security" = "is_granted('ROLE_ADMIN')",
- *      "security_message" = "Accès refusé!",
- *     "pagination_enabled"=true,
- *     "pagination_items_per_page"=5
+ *      "security_message" = "Accès refusé!"
  *  },
  *  collectionOperations = {
  *      "get" = {
@@ -58,7 +53,7 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"profil:read"})
+     * @Groups({"user:read"})
      */
     private $id;
 
@@ -67,6 +62,7 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
      * @Assert\NotBlank(
      *  message = "Champ Requis"
      * )
+     * @Groups({"user:read"})
      */
     private $username;
 
@@ -85,7 +81,7 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"profil:read"})
+     * @Groups({"user:read"})
      * @Assert\NotBlank(
      *  message = "Champs Requis"
      * )
@@ -94,13 +90,14 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Groups({"user:read"})
      * @Assert\NotBlank()
      */
     private $nom;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"profil:read"})
+     * @Groups({"user:read"})
      * @Assert\Email()
      */
     private $email;
@@ -119,8 +116,8 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
 
     /**
      * @ORM\ManyToOne(targetEntity=Profil::class, inversedBy="users")
+     * @Groups({"user:read", "profil:read"})
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"profil:read"})
      */
     private $profil;
 

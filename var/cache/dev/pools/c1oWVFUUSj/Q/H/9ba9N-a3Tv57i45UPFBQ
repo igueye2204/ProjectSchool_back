@@ -49,15 +49,22 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'groups' => [
                 1 => [
-                    'profil:read',
+                    'user:read',
+                ],
+                [
+                    'user:read',
                 ],
                 5 => [
-                    'profil:read',
+                    'user:read',
                 ],
-                7 => [
-                    'profil:read',
+                [
+                    'user:read',
+                ],
+                [
+                    'user:read',
                 ],
                 10 => [
+                    'user:read',
                     'profil:read',
                 ],
             ],

@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Competence;
 use App\Entity\GroupeCompetence;
 use App\Entity\Niveau;
+use App\Repository\CompetenceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,29 +29,18 @@ class GroupeCompetenceController extends AbstractController
      *  }
      * )
      */
-    public function addGrpCompetence(Request $request, SerializerInterface $serializer, EntityManagerInterface $manager)
+    public function addGrpCompetence(Request $request, SerializerInterface $serializer,CompetenceRepository $repo, EntityManagerInterface $manager)
     {
 
         $grpCompeTab = json_decode($request->getContent(), true);
-        $competencesTab = $grpCompeTab['competences'];
-        $grpCompetences = $repo->findOneBy(['libelle' => $competenceTab["GroupeCompetence"]]);
-        unset($competenceTab["GroupeCompetence"]);
-        foreach ($competencesTab as $competence) {
-            $cmpt = $serializer->denormalize($competence, Competence::class);
-            $levels = $cmpt->getNiveaux();
-            foreach ($competence['niveaux'] as $level => $niveau) {
-                $niveau['niveau'] = $level + 1;
-                $levels[$level] = $serializer->denormalize($niveau, Niveau::class);
-                $levels[$level]->setCompetence($cmpt);
-            }
-            $competences[] = $cmpt;
-        }
+        $competences = $repo->findBy(['libelle' => $grpCompeTab['competences']]);
 
+        unset($grpCompeTab['competences']);
         $grpCompetences = $serializer->denormalize($grpCompeTab, GroupeCompetence::class);
 
         foreach ($competences as $competence) {
+
             $grpCompetences->addCompetence($competence);
-            $competence->addGroupeCompetence($grpCompetences);
             $manager->persist($competence);
         }
         $manager->persist($grpCompetences);

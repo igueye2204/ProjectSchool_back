@@ -64,7 +64,7 @@ class Profil
 
     /**
      * @ORM\Column(type="string", length=20, unique=true)
-     * @Groups({"profil:read"})
+     * @Groups({"profil:read", "user:read"})
      * @Assert\NotBlank(
      *  message = "Champs Requis"
      * )
@@ -78,7 +78,6 @@ class Profil
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="profil", orphanRemoval=true, cascade={"persist"})
-     * @Groups({"profil:read"})
      * @ApiSubresource
      */
     private $users;

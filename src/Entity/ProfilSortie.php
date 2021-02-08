@@ -14,17 +14,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     attributes = {
  *      "security" = "is_granted('ROLE_ADMIN')",
- *      "security_message" = "Accès refusé!",
- *     "pagination_enabled"=true,
- *     "pagination_items_per_page"=2
+ *      "security_message" = "Accès refusé!"
  *  },
  *     routePrefix="/admin",
  *     collectionOperations = {
  *          "get" = {
  *                  "path" = "/profilsorties",
  *          },
- *          "post" = {
+ *          "add_profil" = {
+ *                  "method" = "post",
  *                  "path" = "/profilsorties",
+ *                  "deserialize" = false
  *          },
  * },
  * itemOperations = {

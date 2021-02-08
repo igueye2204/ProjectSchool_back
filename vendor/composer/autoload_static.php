@@ -159,6 +159,7 @@ class ComposerStaticInite0606bcbee17ecd8d2057b80140de34d
             'Symfony\\Bundle\\SecurityBundle\\' => 30,
             'Symfony\\Bundle\\MakerBundle\\' => 27,
             'Symfony\\Bundle\\FrameworkBundle\\' => 31,
+            'Symfony\\Bundle\\DebugBundle\\' => 27,
             'Symfony\\Bridge\\Twig\\' => 20,
             'Symfony\\Bridge\\PhpUnit\\' => 23,
             'Symfony\\Bridge\\Doctrine\\' => 24,
@@ -473,6 +474,10 @@ class ComposerStaticInite0606bcbee17ecd8d2057b80140de34d
         'Symfony\\Bundle\\FrameworkBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/framework-bundle',
+        ),
+        'Symfony\\Bundle\\DebugBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/debug-bundle',
         ),
         'Symfony\\Bridge\\Twig\\' => 
         array (
@@ -1102,7 +1107,9 @@ class ComposerStaticInite0606bcbee17ecd8d2057b80140de34d
         'ApiPlatform\\Core\\Validator\\ValidatorInterface' => __DIR__ . '/..' . '/api-platform/core/src/Validator/ValidatorInterface.php',
         'App\\Controller\\ApprenantController' => __DIR__ . '/../..' . '/src/Controller/ApprenantController.php',
         'App\\Controller\\CompetenceController' => __DIR__ . '/../..' . '/src/Controller/CompetenceController.php',
+        'App\\Controller\\GroupeCompetenceController' => __DIR__ . '/../..' . '/src/Controller/GroupeCompetenceController.php',
         'App\\Controller\\ProfilController' => __DIR__ . '/../..' . '/src/Controller/ProfilController.php',
+        'App\\Controller\\TagController' => __DIR__ . '/../..' . '/src/Controller/TagController.php',
         'App\\Controller\\USerController' => __DIR__ . '/../..' . '/src/Controller/USerController.php',
         'App\\DataFixtures\\Adminfixtures' => __DIR__ . '/../..' . '/src/DataFixtures/Adminfixtures.php',
         'App\\DataFixtures\\Apprenantfixtures' => __DIR__ . '/../..' . '/src/DataFixtures/Apprenantfixtures.php',
@@ -3731,6 +3738,11 @@ class ComposerStaticInite0606bcbee17ecd8d2057b80140de34d
         'Symfony\\Bridge\\Twig\\TokenParser\\TransTokenParser' => __DIR__ . '/..' . '/symfony/twig-bridge/TokenParser/TransTokenParser.php',
         'Symfony\\Bridge\\Twig\\Translation\\TwigExtractor' => __DIR__ . '/..' . '/symfony/twig-bridge/Translation/TwigExtractor.php',
         'Symfony\\Bridge\\Twig\\UndefinedCallableHandler' => __DIR__ . '/..' . '/symfony/twig-bridge/UndefinedCallableHandler.php',
+        'Symfony\\Bundle\\DebugBundle\\Command\\ServerDumpPlaceholderCommand' => __DIR__ . '/..' . '/symfony/debug-bundle/Command/ServerDumpPlaceholderCommand.php',
+        'Symfony\\Bundle\\DebugBundle\\DebugBundle' => __DIR__ . '/..' . '/symfony/debug-bundle/DebugBundle.php',
+        'Symfony\\Bundle\\DebugBundle\\DependencyInjection\\Compiler\\DumpDataCollectorPass' => __DIR__ . '/..' . '/symfony/debug-bundle/DependencyInjection/Compiler/DumpDataCollectorPass.php',
+        'Symfony\\Bundle\\DebugBundle\\DependencyInjection\\Configuration' => __DIR__ . '/..' . '/symfony/debug-bundle/DependencyInjection/Configuration.php',
+        'Symfony\\Bundle\\DebugBundle\\DependencyInjection\\DebugExtension' => __DIR__ . '/..' . '/symfony/debug-bundle/DependencyInjection/DebugExtension.php',
         'Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\AbstractPhpFileCacheWarmer' => __DIR__ . '/..' . '/symfony/framework-bundle/CacheWarmer/AbstractPhpFileCacheWarmer.php',
         'Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\AnnotationsCacheWarmer' => __DIR__ . '/..' . '/symfony/framework-bundle/CacheWarmer/AnnotationsCacheWarmer.php',
         'Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\CachePoolClearerCacheWarmer' => __DIR__ . '/..' . '/symfony/framework-bundle/CacheWarmer/CachePoolClearerCacheWarmer.php',

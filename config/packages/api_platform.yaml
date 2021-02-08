@@ -12,6 +12,5 @@ api_platform:
     eager_loading:
         force_eager: false
     collection:
-        pagination:
-            items_per_page: 2
-            client_items_per_page: true
+    formats:
+        json:   ['application/json']

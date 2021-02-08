@@ -54,6 +54,11 @@ class GroupeCompetence
      */
     private $competences;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $descriptif;
+
     public function __construct()
     {
         $this->competences = new ArrayCollection();
@@ -100,6 +105,18 @@ class GroupeCompetence
             $this->competences->removeElement($competence);
             $competence->removeGroupeCompetence($this);
         }
+
+        return $this;
+    }
+
+    public function getDescriptif(): ?string
+    {
+        return $this->descriptif;
+    }
+
+    public function setDescriptif(string $descriptif): self
+    {
+        $this->descriptif = $descriptif;
 
         return $this;
     }

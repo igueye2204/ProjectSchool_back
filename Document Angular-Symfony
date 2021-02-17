@@ -1,0 +1,68 @@
+========================Angular==================================
+
+
+Tout d'abord on copie le lien à cloner, exemple:
+
+-https://github.com/igueye2204/ProjetSchool_front.git
+
+Ensuite on ouvre le terminal on ajoute les commandes:
+
+1- git clone https://github.com/igueye2204/ProjetSchool_front.git
+2- cd ProjetSchool_front
+
+Aprés Avoir cloner installer les 3 commandes:
+
+1-npm install
+2-ng init --source-dir app
+3-npm start
+
+Ainsi l'application angular et utilisable.
+
+Pour se logger on peut utiliser ces users:
+
+1-Un utilisateur Admin:
+
+username: jules33
+
+password: pass_1234
+
+2-Un utilisateur CM:
+
+username: Mouha12
+
+password: pass_1234
+
+3-Un utilisateur Apprenant:
+
+username: izo14
+
+password: pass_1234
+
+4-Un utilisateur Formateur:
+
+username: feuz00
+
+password: pass_1234
+
+==========================end=====================================
+
+
+
+========================Symfony===================================
+
+
+Tout d'abord on copie le lien à cloner, exemple:
+
+-https://github.com/igueye2204/ProjetSchool_Back.git
+
+Ensuite on ouvre le terminal on ajoute les commandes:
+
+1.git clone https://github.com/igueye2204/ProjetSchool_Back.git
+
+2.cd ProjetSchool_Back
+
+3.symfony server:start
+
+Ainsi l'application symfony est prête.
+
+============================end=====================================

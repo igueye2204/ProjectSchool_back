@@ -16,7 +16,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             'defaults' => [
                 [
                     '_api_resource_class' => 'App\\Entity\\Profil',
-                    '_api_collection_operation_name' => 'add_profil',
+                    '_api_collection_operation_nam' => 'add_profil',
                 ],
             ],
             'methods' => [

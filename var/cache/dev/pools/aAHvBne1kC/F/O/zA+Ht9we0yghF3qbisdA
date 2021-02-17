@@ -98,6 +98,11 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             'attributes' => [
                 [
                     'route_prefix' => '/admin',
+                    'normalization_context' => [
+                        'groups' => [
+                            'Grpcompetence:read',
+                        ],
+                    ],
                     'input' => null,
                     'output' => null,
                 ],

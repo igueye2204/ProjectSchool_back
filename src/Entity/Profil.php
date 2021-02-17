@@ -15,6 +15,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=ProfilRepository::class)
  * @ApiResource(
  *  routePrefix="/admin",
+ *     subresourceOperations={
+ *          "get"={
+ *              "path"="/admin/profils/{id}/users"
+ *          },
+ *      },
  *  normalizationContext={
  *      "groups"={
  *          "profil:read"
@@ -25,30 +30,39 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "security_message" = "Vous n'avez pas accès à cette ressource"
  *  },
  *  collectionOperations = {
- *      "get" = {
- *          "path" = "/profils",
+ *
+ *      "get_profil" = {
+ *          "method" = "get",
+ *          "deserialize" = false
  *      },
+ *
  *      "add_profil" = {
- *          "method" = "post",
-*      "deserialize" = false
- *      },
+ *          "method" = "post"
+ *      }
  *  },
  *  itemOperations = {
+ *
+ *     "put" ,
+ *     "get" = {
+ *          "path"="/profils/{id}",
+ *          "deserialize" = false
+ *     },
+ *
  *     "get_users_profil"={
  *          "method" = "get",
  *          "path"="/profils/{id}/users"
  *          },
+ *
  *      "get_profil" = {
  *          "method" = "get",
- *          "path" = "/profils/{id}"
+ *          "deserialize" = false
  *      },
- *      "put" = {
- *          "path" = "/profils/{id}"
- *      },
- *      "delete" = {
- *     "method" = "delete",
- *          "path" = "/profils/{id}"
- *      }
+ *
+ *
+ *     "desarchive_profil" = {
+*            "method" = "delete",
+ *          "deserialize" = false
+ *     }
  *  }
  * )
  */
@@ -79,6 +93,7 @@ class Profil
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="profil", orphanRemoval=true, cascade={"persist"})
      * @ApiSubresource
+     * @Groups({"profil:read"})
      */
     private $users;
 

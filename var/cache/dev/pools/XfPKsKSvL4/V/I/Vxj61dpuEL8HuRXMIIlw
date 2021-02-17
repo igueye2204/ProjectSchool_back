@@ -13,31 +13,40 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'collectionOperations' => [
                 1 => [
-                    'get' => [
-                        'path' => '/profils',
+                    'get_profil' => [
+                        'method' => 'get',
+                        'deserialize' => false,
                     ],
                     'add_profil' => [
                         'method' => 'post',
-                        'deserialize' => false,
                     ],
                 ],
             ],
             'itemOperations' => [
                 1 => [
+                    'put',
+                    'get' => [
+                        'path' => '/profils/{id}',
+                        'deserialize' => false,
+                    ],
                     'get_users_profil' => [
                         'method' => 'get',
                         'path' => '/profils/{id}/users',
                     ],
                     'get_profil' => [
                         'method' => 'get',
-                        'path' => '/profils/{id}',
+                        'deserialize' => false,
                     ],
-                    'put' => [
-                        'path' => '/profils/{id}',
-                    ],
-                    'delete' => [
+                    'desarchive_profil' => [
                         'method' => 'delete',
-                        'path' => '/profils/{id}',
+                        'deserialize' => false,
+                    ],
+                ],
+            ],
+            'subresourceOperations' => [
+                1 => [
+                    'get' => [
+                        'path' => '/admin/profils/{id}/users',
                     ],
                 ],
             ],

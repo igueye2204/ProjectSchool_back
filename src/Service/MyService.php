@@ -39,7 +39,7 @@ class MyService
             $key = str_replace(["\r\n", ' "', '"'], '', $elementsTab[$i]);
             if (strchr($key, $fileName)) {
                 $stream = fopen('php://memory', 'r+');
-                fwrite($stream, base64_encode($elementsTab[$i + 1]));
+                fwrite($stream, $elementsTab[$i + 1]);
                 rewind($stream);
                 $data[$fileName] =  $stream;
                 // echo "<img src='data:image;base64," . $data[$fileName] . "'>";

@@ -33,6 +33,39 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     ],
                     'update_user' => [
                         'method' => 'PUT',
+                        'path' => '/users/{id}',
+                        'deserialize' => false,
+                        'input' => null,
+                        'output' => null,
+                        'input_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                        'output_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                    ],
+                    'delete_user' => [
+                        'method' => 'DELETE',
+                        'deserialize' => false,
+                        'input' => null,
+                        'output' => null,
+                        'input_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                        'output_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                    ],
+                    'desarchive_user' => [
+                        'method' => 'DELETE',
                         'deserialize' => false,
                         'input' => null,
                         'output' => null,
@@ -51,12 +84,27 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'collectionOperations' => [
                 [
-                    'get' => [
-                        'path' => '/users',
+                    'get_users' => [
+                        'method' => 'GET',
                         'deserialize' => false,
                         'input' => null,
                         'output' => null,
+                        'input_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                        'output_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                    ],
+                    'get_users_deleted' => [
                         'method' => 'GET',
+                        'deserialize' => false,
+                        'input' => null,
+                        'output' => null,
                         'input_formats' => [
                             'json' => [
                                 'application/json',

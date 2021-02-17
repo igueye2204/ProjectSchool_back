@@ -6,6 +6,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
         clone ($p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata')),
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
     ],
     null,
     [
@@ -15,12 +16,29 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 'id',
                 'libelle',
                 'competences',
+                'descriptif',
             ],
             'attributesMetadata' => [
                 [
                     'id' => $o[1],
                     'libelle' => $o[2],
                     'competences' => $o[3],
+                    'descriptif' => $o[4],
+                ],
+            ],
+            'groups' => [
+                1 => [
+                    'Grpcompetence:read',
+                ],
+                [
+                    'Grpcompetence:read',
+                    'competence:read',
+                ],
+                [
+                    'Grpcompetence:read',
+                ],
+                [
+                    'Grpcompetence:read',
                 ],
             ],
         ],

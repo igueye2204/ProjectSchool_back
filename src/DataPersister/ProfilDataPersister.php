@@ -31,11 +31,11 @@ class ProfilDataPersister implements ContextAwareDataPersisterInterface
 
     public function persist($data, array $context = [])
     {
-        //$data->setSlug(
-          //  $this
-              //  ->_slugger
-                //->slug(strtolower($data->getTitle())). '-' .uniqid()
-       // );
+        $data->setSlug(
+            $this
+                ->_slugger
+                ->slug(strtolower($data->getTitle())). '-' .uniqid()
+        );
 
        $this->_entityManager->persist($data);
        $this->_entityManager->flush();

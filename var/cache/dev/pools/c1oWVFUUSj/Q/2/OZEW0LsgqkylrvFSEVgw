@@ -8,7 +8,6 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
-        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
     ],
     null,
     [
@@ -17,7 +16,6 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 'App\\Entity\\Competence',
                 'id',
                 'libelle',
-                'descriptif',
                 'GroupeCompetence',
                 'niveaux',
                 'groupeCompetence',
@@ -26,10 +24,24 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 [
                     'id' => $o[1],
                     'libelle' => $o[2],
-                    'descriptif' => $o[3],
-                    'GroupeCompetence' => $o[4],
-                    'niveaux' => $o[5],
-                    'groupeCompetence' => $o[6],
+                    'GroupeCompetence' => $o[3],
+                    'niveaux' => $o[4],
+                    'groupeCompetence' => $o[5],
+                ],
+            ],
+            'groups' => [
+                1 => [
+                    'competence:read',
+                ],
+                [
+                    'competence:read',
+                    'Grpcompetence:read',
+                ],
+                [
+                    'competence:read',
+                ],
+                [
+                    'competence:read',
                 ],
             ],
         ],

@@ -6,6 +6,7 @@ use App\Repository\NiveauRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=NiveauRepository::class)
@@ -20,17 +21,20 @@ class Niveau
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"competence:read"})
      */
     private $niveau;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"competence:read"})
      */
     private $actions;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"competence:read"})
      */
     private $criteres;
 

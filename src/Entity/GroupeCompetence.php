@@ -7,12 +7,14 @@ use App\Repository\GroupeCompetenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=GroupeCompetenceRepository::class)
  * @ApiResource(
  *     routePrefix="/admin",
+ *     normalizationContext={"groups"={"Grpcompetence:read"}},
  *     collectionOperations = {
  *      "get" = {
  *          "path" = "/grpcompetences"
@@ -39,22 +41,26 @@ class GroupeCompetence
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"Grpcompetence:read"})
      */
     private $id;
 
     /**
+     * @Groups({"Grpcompetence:read", "competence:read"})
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
     private $libelle;
 
     /**
+     * @Groups({"Grpcompetence:read"})
      * @ORM\ManyToMany(targetEntity=Competence::class, mappedBy="GroupeCompetence")
      * @Assert\NotBlank()
      */
     private $competences;
 
     /**
+     * @Groups({"Grpcompetence:read"})
      * @ORM\Column(type="text")
      */
     private $descriptif;

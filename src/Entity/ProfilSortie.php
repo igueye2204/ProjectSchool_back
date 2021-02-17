@@ -7,6 +7,7 @@ use App\Repository\ProfilSortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,25 +18,47 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "security_message" = "Accès refusé!"
  *  },
  *     routePrefix="/admin",
+ *      normalizationContext={
+ *      "groups"={
+ *          "ProfilSortie:read"
+ *      }
+ *  },
  *     collectionOperations = {
- *          "get" = {
- *                  "path" = "/profilsorties",
+ *
+ *          "get_profilsortie_deleted" = {
+ *                     "method" = "get",
+ *                   "deserialize" = false
  *          },
+ *
  *          "add_profil" = {
  *                  "method" = "post",
  *                  "path" = "/profilsorties",
  *                  "deserialize" = false
- *          },
+ *          }
  * },
  * itemOperations = {
+ *
  *           "get" = {
- *                  "path" = "/profilsortie/{id}"
+ *                  "path" = "/profilsortie/{id}",
+ *                   "deserialize" = false
  *          },
  *          "put" = {
  *                  "path" = "/profilsortie/{id}"
  *          },
- *     "delete" ={
- *                   "path" = "/profilsortie/{id}"
+*           "get_profilsortie" = {
+*                       "method" = "get",
+*                          "path" = "/profilsorties",
+*                   "deserialize" = false
+*          },
+ *
+ *     "desarchive_profilsortie" = {
+ *            "method" = "delete",
+ *       "deserialize" = false
+ *          },
+ *
+ *    "delete_profilsortie" = {
+*            "method" = "delete",
+ *      "deserialize" = false
  *     }
  * }
  * )
@@ -46,11 +69,13 @@ class ProfilSortie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"ProfilSortie:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, unique= true)
+     * @Groups({"ProfilSortie:read"})
      * @Assert\NotBlank(
      *     message="Veuillez ajouter un profil SVP!"
      * )

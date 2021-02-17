@@ -17,6 +17,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 [
                     'get' => [
                         'path' => '/profilsortie/{id}',
+                        'deserialize' => false,
                         'input' => null,
                         'output' => null,
                         'method' => 'GET',
@@ -47,11 +48,44 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             ],
                         ],
                     ],
-                    'delete' => [
-                        'path' => '/profilsortie/{id}',
+                    'get_profilsortie' => [
+                        'method' => 'GET',
+                        'path' => '/profilsorties',
+                        'deserialize' => false,
                         'input' => null,
                         'output' => null,
+                        'input_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                        'output_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                    ],
+                    'desarchive_profilsortie' => [
                         'method' => 'DELETE',
+                        'deserialize' => false,
+                        'input' => null,
+                        'output' => null,
+                        'input_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                        'output_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                    ],
+                    'delete_profilsortie' => [
+                        'method' => 'DELETE',
+                        'deserialize' => false,
+                        'input' => null,
+                        'output' => null,
                         'input_formats' => [
                             'json' => [
                                 'application/json',
@@ -67,11 +101,11 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'collectionOperations' => [
                 [
-                    'get' => [
-                        'path' => '/profilsorties',
+                    'get_profilsortie_deleted' => [
+                        'method' => 'GET',
+                        'deserialize' => false,
                         'input' => null,
                         'output' => null,
-                        'method' => 'GET',
                         'input_formats' => [
                             'json' => [
                                 'application/json',
@@ -116,6 +150,11 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'security' => 'is_granted(\'ROLE_ADMIN\')',
                     'security_message' => 'Accès refusé!',
                     'route_prefix' => '/admin',
+                    'normalization_context' => [
+                        'groups' => [
+                            'ProfilSortie:read',
+                        ],
+                    ],
                     'input' => null,
                     'output' => null,
                 ],

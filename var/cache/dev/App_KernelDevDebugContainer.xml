@@ -477,6 +477,10 @@
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="slugger"/>
     </service>
+    <service id="App\Events\JwtCreatedSubscriber" class="App\Events\JwtCreatedSubscriber" autowire="true" autoconfigure="true"/>
+    <service id="App\Main" class="App\Main" autowire="true" autoconfigure="true">
+      <argument type="service" id="serializer"/>
+    </service>
     <service id="App\Repository\ApprenantRepository" class="App\Repository\ApprenantRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -529,6 +533,9 @@
       <tag name="security.voter"/>
     </service>
     <service id="App\Service\MyService" class="App\Service\MyService" autowire="true" autoconfigure="true"/>
+    <service id="acme_api.event.jwt_created_listener" class="App\Events\JwtCreatedSubscriber" autowire="true" autoconfigure="true">
+      <tag name="kernel.event_listener" event="lexik_jwt_authentication.on_jwt_created" method="updateJwtData"/>
+    </service>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory" public="false"/>
     <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener" public="false">
       <tag name="kernel.event_subscriber"/>
@@ -1543,6 +1550,14 @@
       <argument type="service" id="debug.stopwatch"/>
       <argument type="service" id="logger" on-invalid="null"/>
       <argument type="service" id="request_stack" on-invalid="null"/>
+      <call method="addListener">
+        <argument>lexik_jwt_authentication.on_jwt_created</argument>
+        <argument type="collection">
+          <argument type="service" id="acme_api.event.jwt_created_listener"/>
+          <argument>updateJwtData</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
       <call method="addListener">
         <argument>kernel.request</argument>
         <argument type="collection">
@@ -5617,6 +5632,33 @@
         <argument key="validator" type="service" id="validator"/>
       </argument>
     </service>
+    <service id=".service_locator.1QQumwa" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
+        <argument key="repo" type="service" id="App\Repository\ProfilRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.Om4dtJv" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
+      </argument>
+    </service>
+    <service id=".service_locator.UJN0w3e" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="method" type="service" id="App\Main"/>
+        <argument key="repo" type="service" id="App\Repository\ProfilRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.pjyjTWg" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="method" type="service" id="App\Main"/>
+        <argument key="repo" type="service" id="App\Repository\ProfilSortieRepository"/>
+      </argument>
+    </service>
     <service id=".service_locator.xPCyVuZ" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -5627,26 +5669,43 @@
         <argument key="validator" type="service" id="validator"/>
       </argument>
     </service>
-    <service id=".service_locator.aNX5z1N" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.sVN9NGn" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="denormalizer" type="service" id="serializer"/>
-        <argument key="encoder" type="service" id="security.user_password_encoder.generic"/>
         <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
         <argument key="repo" type="service" id="App\Repository\UserRepository"/>
-        <argument key="serializer" type="service" id="serializer"/>
         <argument key="serve" type="service" id="App\Service\MyService"/>
       </argument>
     </service>
-    <service id=".service_locator.eojNFxr" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.FqelAZQ" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="method" type="service" id="App\Main"/>
+        <argument key="repo" type="service" id="App\Repository\UserRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.aYSsrIz" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\CompetenceController::addCompetence" type="service" id=".service_locator.XJm310N"/>
         <argument key="App\Controller\GroupeCompetenceController::addGrpCompetence" type="service" id=".service_locator.bVy_Y5a"/>
+        <argument key="App\Controller\ProfilController::DProfil" type="service" id=".service_locator.Om4dtJv"/>
         <argument key="App\Controller\ProfilController::addProfil" type="service" id=".service_locator.19ps0qC"/>
+        <argument key="App\Controller\ProfilController::deleteProfil" type="service" id=".service_locator.1QQumwa"/>
+        <argument key="App\Controller\ProfilController::getDeletedUsers" type="service" id=".service_locator.UJN0w3e"/>
+        <argument key="App\Controller\ProfilController::getProfil" type="service" id=".service_locator.UJN0w3e"/>
+        <argument key="App\Controller\ProfilSortieController::DeleteProfilSort" type="service" id=".service_locator.Om4dtJv"/>
         <argument key="App\Controller\ProfilSortieController::addProfilSortie" type="service" id=".service_locator.19ps0qC"/>
+        <argument key="App\Controller\ProfilSortieController::deleteProfilSortie" type="service" id=".service_locator.Om4dtJv"/>
+        <argument key="App\Controller\ProfilSortieController::getDeletedUsers" type="service" id=".service_locator.pjyjTWg"/>
+        <argument key="App\Controller\ProfilSortieController::getProfil" type="service" id=".service_locator.pjyjTWg"/>
         <argument key="App\Controller\USerController::addUser" type="service" id=".service_locator.xPCyVuZ"/>
-        <argument key="App\Controller\USerController::updateUser" type="service" id=".service_locator.aNX5z1N"/>
+        <argument key="App\Controller\USerController::delUser" type="service" id=".service_locator.Om4dtJv"/>
+        <argument key="App\Controller\USerController::desarchiveUser" type="service" id=".service_locator.Om4dtJv"/>
+        <argument key="App\Controller\USerController::getDeletedUsers" type="service" id=".service_locator.FqelAZQ"/>
+        <argument key="App\Controller\USerController::getUsers" type="service" id=".service_locator.FqelAZQ"/>
+        <argument key="App\Controller\USerController::updateUser" type="service" id=".service_locator.sVN9NGn"/>
         <argument key="App\Kernel::loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="App\Kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
@@ -5655,10 +5714,22 @@
         <argument key="kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
         <argument key="App\Controller\CompetenceController:addCompetence" type="service" id=".service_locator.XJm310N"/>
         <argument key="App\Controller\GroupeCompetenceController:addGrpCompetence" type="service" id=".service_locator.bVy_Y5a"/>
+        <argument key="App\Controller\ProfilController:DProfil" type="service" id=".service_locator.Om4dtJv"/>
         <argument key="App\Controller\ProfilController:addProfil" type="service" id=".service_locator.19ps0qC"/>
+        <argument key="App\Controller\ProfilController:deleteProfil" type="service" id=".service_locator.1QQumwa"/>
+        <argument key="App\Controller\ProfilController:getDeletedUsers" type="service" id=".service_locator.UJN0w3e"/>
+        <argument key="App\Controller\ProfilController:getProfil" type="service" id=".service_locator.UJN0w3e"/>
+        <argument key="App\Controller\ProfilSortieController:DeleteProfilSort" type="service" id=".service_locator.Om4dtJv"/>
         <argument key="App\Controller\ProfilSortieController:addProfilSortie" type="service" id=".service_locator.19ps0qC"/>
+        <argument key="App\Controller\ProfilSortieController:deleteProfilSortie" type="service" id=".service_locator.Om4dtJv"/>
+        <argument key="App\Controller\ProfilSortieController:getDeletedUsers" type="service" id=".service_locator.pjyjTWg"/>
+        <argument key="App\Controller\ProfilSortieController:getProfil" type="service" id=".service_locator.pjyjTWg"/>
         <argument key="App\Controller\USerController:addUser" type="service" id=".service_locator.xPCyVuZ"/>
-        <argument key="App\Controller\USerController:updateUser" type="service" id=".service_locator.aNX5z1N"/>
+        <argument key="App\Controller\USerController:delUser" type="service" id=".service_locator.Om4dtJv"/>
+        <argument key="App\Controller\USerController:desarchiveUser" type="service" id=".service_locator.Om4dtJv"/>
+        <argument key="App\Controller\USerController:getDeletedUsers" type="service" id=".service_locator.FqelAZQ"/>
+        <argument key="App\Controller\USerController:getUsers" type="service" id=".service_locator.FqelAZQ"/>
+        <argument key="App\Controller\USerController:updateUser" type="service" id=".service_locator.sVN9NGn"/>
         <argument key="kernel:loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel:registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel:terminate" type="service" id=".service_locator.beq5mCo"/>
@@ -5988,12 +6059,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.eojNFxr"/>
+      <argument type="service" id=".service_locator.aYSsrIz"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.eojNFxr"/>
+      <argument type="service" id=".service_locator.aYSsrIz"/>
     </service>
     <service id="api_platform.swagger.normalizer.api_gateway.inner" class="ApiPlatform\Core\Swagger\Serializer\DocumentationNormalizer" public="false">
       <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
@@ -6437,7 +6508,7 @@
     <service id="Yectep\PhpSpreadsheetBundle\Factory" alias="phpoffice.spreadsheet"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.eojNFxr"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.aYSsrIz"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="api_platform.name_converter" alias="serializer.name_converter.metadata_aware"/>
     <service id="Psr\Log\LoggerInterface" alias="logger" public="false"/>

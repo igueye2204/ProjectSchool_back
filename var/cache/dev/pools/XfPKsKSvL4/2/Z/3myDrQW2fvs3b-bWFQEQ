@@ -31,8 +31,12 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'collectionOperations' => [
                 4 => [
-                    'get' => [
-                        'path' => '/users',
+                    'get_users' => [
+                        'method' => 'get',
+                        'deserialize' => false,
+                    ],
+                    'get_users_deleted' => [
+                        'method' => 'get',
                         'deserialize' => false,
                     ],
                     'post_user' => [
@@ -48,6 +52,15 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     ],
                     'update_user' => [
                         'method' => 'put',
+                        'path' => '/users/{id}',
+                        'deserialize' => false,
+                    ],
+                    'delete_user' => [
+                        'method' => 'delete',
+                        'deserialize' => false,
+                    ],
+                    'desarchive_user' => [
+                        'method' => 'delete',
                         'deserialize' => false,
                     ],
                 ],

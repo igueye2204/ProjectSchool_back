@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 
+
+use App\Main;
 use App\Entity\User;
 use App\Entity\Profil;
 use App\Repository\UserRepository;
@@ -23,6 +25,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class USerController extends AbstractController
 {
 
+
     /**
      * @Route(
      *  "/api/admin/users",
@@ -40,7 +43,7 @@ class USerController extends AbstractController
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @param SerializerInterface $serializer
-     * @return JsonResponse|Response
+     * @return Response|JsonResponse|BadRequestHttpException
      */
     public function addUser(Myservice $serve, DenormalizerInterface $denormalizer, EntityManagerInterface $manager, ValidatorInterface $validator, Request $request, UserPasswordEncoderInterface $encoder)
     {
@@ -50,12 +53,11 @@ class USerController extends AbstractController
 
         $newUser['avatar'] = $serve->upload($uploadedFile);
         $newUser['avatarType'] = $serve->type($uploadedFile);
-        //dd($newUser['avatarType'])
         $profil = ucfirst(strtolower($newUser['profil']));
         $profilName = "App\\Entity\\$profil";
         if(class_exists($profilName)){
             $profilObject = $manager->getRepository(Profil::class)->findOneBy(['libelle' => $profil]);
-            unset($newUser['profil']);
+                unset($newUser['profil']);
             $user = $denormalizer->denormalize($newUser, $profilName);
 
             $user->setProfil($profilObject);
@@ -63,7 +65,7 @@ class USerController extends AbstractController
             $errors = $validator->validate($newUser);
 
             if (count($errors) > 0) {
-                $errorsString = (string) $errors;
+                $errorsString = $errors;
 
                 return new Response($errorsString);
 
@@ -74,6 +76,7 @@ class USerController extends AbstractController
             return new JsonResponse("success", Response::HTTP_CREATED, [], true);
 
         }else{
+
             return new BadRequestHttpException("Ce profil n'éxiste pas");
         }
 
@@ -90,33 +93,110 @@ class USerController extends AbstractController
      *      }
      *    )
      */
-    public function updateUser(MyService $serve, Request $request,UserPasswordEncoderInterface $encoder ,DenormalizerInterface $denormalizer, SerializerInterface $serializer, UserRepository $repo, EntityManagerInterface $manager){
+    public function updateUser(MyService $serve, DenormalizerInterface $denormalizer, Request $request, UserRepository $repo, EntityManagerInterface $manager){
+
         //Récuperation de l'objet dans la base de données
-        $userData = $request->attributes->get("data");
+        $userData = $request->attributes->get('data');
         $userId = $request->attributes->get("id");
 
         $data = $serve->putData($request, 'avatar');
-
         $user = $repo->find($userId);
         if (!$user) {
-            new Response(
-                "l'utilisateurs non trouvée avec l’id " . $userId
-            );
+            new Response("l'utilisateurs non trouvée avec l’id " . $userId);
         }else{
 
             foreach ($data as $k => $v) {
                 $setter = 'set' . ucfirst($k);
-                if (!method_exists($userData, $setter)) {
-                    return new Response("La méthode $setter() n'éxiste pas dans l'entité User");
+
+                        if (!method_exists($userData, $setter)) {
+                        return new Response("La méthode $setter() n'éxiste pas dans l'entité User");
+
                 }
                 $userData->$setter($v);
             }
+            $manager->persist($userData);
+            $manager->flush();
 
-                $manager->persist($userData);
-                $manager->flush();
-
-                return new JsonResponse("success", Response::HTTP_CREATED, [], true);
+            return new JsonResponse("success", Response::HTTP_CREATED, [], true);
 
         }
     }
+
+    /**
+     * @Route(
+     * "/api/admin/users/{id}",
+     *  name="delete_user",
+     *  methods={"DELETE"},
+     *  defaults={
+     *      "_api_resource_class" = User::class,
+     *      "_api_item_operation_name" = "delete_user"
+     *      }
+     *    )
+     */
+    public function delUser(Request $request, EntityManagerInterface $manager)
+    {
+        $ref = $request->attributes->get('data');
+        $ref->setArchive(true);
+        $manager->persist($ref);
+        $manager->flush();
+        return new JsonResponse("success", Response::HTTP_CREATED, [], true);
+    }
+
+    /**
+     * @Route(
+     * "/api/admin/users/desarchive/{id}",
+     *  name="desarchive_user",
+     *  methods={"DELETE"},
+     *  defaults={
+     *      "_api_resource_class" = User::class,
+     *      "_api_item_operation_name" = "desarchive_user"
+     *      }
+     *    )
+     */
+    public function desarchiveUser(Request $request, EntityManagerInterface $manager)
+    {
+        $ref = $request->attributes->get('data');
+        $ref->setArchive(false);
+        $manager->persist($ref);
+        $manager->flush();
+        return new JsonResponse("success", Response::HTTP_CREATED, [], true);
+    }
+
+    /**
+     * @Route(
+     * "/api/admin/users",
+     *  name="get_users",
+     *  methods={"GET"},
+     *  defaults={
+     *      "_api_resource_class" = User::class,
+     *      "_api_collection_operation_nam" = "get_users"
+     *      }
+     *    )
+     */
+    public function getUsers(UserRepository $repo, Main $method){
+
+
+        return ($method->getAllUser($repo));
+
+    }
+
+    /**
+     * @Route(
+     * "/api/admin/usersdeleted",
+     *  name="get_users_deleted",
+     *  methods={"GET"},
+     *  defaults={
+     *      "_api_resource_class" = User::class,
+     *      "_api_collection_operation_nam" = "get_users_deleted"
+     *      }
+     *    )
+     */
+    public function getDeletedUsers(UserRepository $repo, Main $method){
+
+
+        return ($method->getDeleted($repo));
+
+    }
+
+
 }

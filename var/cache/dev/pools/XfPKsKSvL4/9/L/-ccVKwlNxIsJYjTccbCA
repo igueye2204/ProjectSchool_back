@@ -2,20 +2,28 @@
 
 return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
     $o = [
-        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\ManyToMany'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\ManyToMany')),
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Serializer\\Annotation\\Groups'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Annotation\\Groups')),
+        clone ($p['Doctrine\\ORM\\Mapping\\ManyToMany'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\ManyToMany')),
         clone ($p['Symfony\\Component\\Validator\\Constraints\\NotBlank'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Validator\\Constraints\\NotBlank')),
     ],
     null,
     [
+        'Symfony\\Component\\Serializer\\Annotation\\Groups' => [
+            'groups' => [
+                [
+                    'Grpcompetence:read',
+                ],
+            ],
+        ],
         'stdClass' => [
             'targetEntity' => [
-                'App\\Entity\\Competence',
+                1 => 'App\\Entity\\Competence',
             ],
             'mappedBy' => [
-                'GroupeCompetence',
+                1 => 'GroupeCompetence',
             ],
             'groups' => [
-                1 => [
+                2 => [
                     'Default',
                 ],
             ],
@@ -24,6 +32,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
     [
         $o[0],
         $o[1],
+        $o[2],
     ],
     []
 ); }];

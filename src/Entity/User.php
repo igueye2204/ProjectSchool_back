@@ -27,10 +27,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *      "security_message" = "Accès refusé!"
  *  },
  *  collectionOperations = {
- *      "get" = {
- *          "path" = "/users",
+ *      "get_users" = {
+ *          "method" = "get",
  *          "deserialize" = false
  *      },
+ *     "get_users_deleted"= {
+ *          "method" = "get",
+ *          "deserialize" = false
+ *     },
  *      "post_user" = {
  *          "method" = "post",
  *          "deserialize" = false
@@ -42,8 +46,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *      },
  *      "update_user" = {
  *          "method" = "put",
+ *          "path"  = "/users/{id}",
  *          "deserialize" = false
- *      }
+ *      },
+ *     "delete_user" = {
+ *             "method" = "delete",
+ *          "deserialize" = false
+ *     },
+ *     "desarchive_user" = {
+ *          "method" = "delete",
+ *          "deserialize" = false
+ *     }
  *  }
  * )
  */
@@ -110,16 +123,23 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
 
     /**
      * @ORM\Column(type="blob", nullable=true)
+     * @Groups({"user:read"})
      * @Assert\File()
      */
     private $avatar;
 
     /**
      * @ORM\ManyToOne(targetEntity=Profil::class, inversedBy="users")
-     * @Groups({"user:read", "profil:read"})
+     * @Groups({"user:read"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $profil;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"user:read"})
+     */
+    private $archive = 0;
 
     public function getId(): ?int
     {
@@ -304,4 +324,17 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
     {
         return $this->decorated->remove($data, $context);
     }
+
+    public function getArchive(): ?bool
+    {
+        return $this->archive;
+    }
+
+    public function setArchive(bool $archive): self
+    {
+        $this->archive = $archive;
+
+        return $this;
+    }
+
 }

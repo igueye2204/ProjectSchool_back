@@ -13,11 +13,14 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'collectionOperations' => [
                 1 => [
-                    'get' => [
-                        'path' => '/profilsorties',
+                    'get_profilsortie_deleted' => [
+                        'method' => 'get',
+                        'deserialize' => false,
                     ],
-                    'post' => [
+                    'add_profil' => [
+                        'method' => 'post',
                         'path' => '/profilsorties',
+                        'deserialize' => false,
                     ],
                 ],
             ],
@@ -25,12 +28,23 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 1 => [
                     'get' => [
                         'path' => '/profilsortie/{id}',
+                        'deserialize' => false,
                     ],
                     'put' => [
                         'path' => '/profilsortie/{id}',
                     ],
-                    'delete' => [
-                        'path' => '/profilsortie/{id}',
+                    'get_profilsortie' => [
+                        'method' => 'get',
+                        'path' => '/profilsorties',
+                        'deserialize' => false,
+                    ],
+                    'desarchive_profilsortie' => [
+                        'method' => 'delete',
+                        'deserialize' => false,
+                    ],
+                    'delete_profilsortie' => [
+                        'method' => 'delete',
+                        'deserialize' => false,
                     ],
                 ],
             ],
@@ -38,9 +52,12 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 1 => [
                     'security' => 'is_granted(\'ROLE_ADMIN\')',
                     'security_message' => 'Accès refusé!',
-                    'pagination_enabled' => true,
-                    'pagination_items_per_page' => 2,
                     'route_prefix' => '/admin',
+                    'normalization_context' => [
+                        'groups' => [
+                            'ProfilSortie:read',
+                        ],
+                    ],
                 ],
             ],
         ],

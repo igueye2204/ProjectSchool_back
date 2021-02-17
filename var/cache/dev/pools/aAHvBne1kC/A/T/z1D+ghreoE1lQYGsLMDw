@@ -15,6 +15,36 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'itemOperations' => [
                 [
+                    'put' => [
+                        'method' => 'PUT',
+                        'input_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                        'output_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                    ],
+                    'get' => [
+                        'path' => '/profils/{id}',
+                        'deserialize' => false,
+                        'input' => null,
+                        'output' => null,
+                        'method' => 'GET',
+                        'input_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                        'output_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                    ],
                     'get_users_profil' => [
                         'method' => 'GET',
                         'path' => '/profils/{id}/users',
@@ -33,7 +63,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     ],
                     'get_profil' => [
                         'method' => 'GET',
-                        'path' => '/profils/{id}',
+                        'deserialize' => false,
                         'input' => null,
                         'output' => null,
                         'input_formats' => [
@@ -47,25 +77,9 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                             ],
                         ],
                     ],
-                    'put' => [
-                        'path' => '/profils/{id}',
-                        'input' => null,
-                        'output' => null,
-                        'method' => 'PUT',
-                        'input_formats' => [
-                            'json' => [
-                                'application/json',
-                            ],
-                        ],
-                        'output_formats' => [
-                            'json' => [
-                                'application/json',
-                            ],
-                        ],
-                    ],
-                    'delete' => [
+                    'desarchive_profil' => [
                         'method' => 'DELETE',
-                        'path' => '/profils/{id}',
+                        'deserialize' => false,
                         'input' => null,
                         'output' => null,
                         'input_formats' => [
@@ -83,11 +97,11 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'collectionOperations' => [
                 [
-                    'get' => [
-                        'path' => '/profils',
+                    'get_profil' => [
+                        'method' => 'GET',
+                        'deserialize' => false,
                         'input' => null,
                         'output' => null,
-                        'method' => 'GET',
                         'input_formats' => [
                             'json' => [
                                 'application/json',
@@ -101,9 +115,25 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     ],
                     'add_profil' => [
                         'method' => 'POST',
-                        'deserialize' => false,
                         'input' => null,
                         'output' => null,
+                        'input_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                        'output_formats' => [
+                            'json' => [
+                                'application/json',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'subresourceOperations' => [
+                [
+                    'get' => [
+                        'path' => '/admin/profils/{id}/users',
                         'input_formats' => [
                             'json' => [
                                 'application/json',

@@ -11,6 +11,5 @@ api_platform:
                 type: header
     eager_loading:
         force_eager: false
-    collection:
     formats:
         json:   ['application/json']

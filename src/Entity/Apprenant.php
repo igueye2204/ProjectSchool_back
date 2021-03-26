@@ -11,6 +11,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=ApprenantRepository::class)
  * @ApiResource(
+ *     normalizationContext={"groups"={"apprenant:read"}},
+ *     attributes = {
+ *
+ *      "security" = "is_granted('ROLE_APPRENANT')",
+ *      "security_message" = "Accès refusé!"
+ *  },
  *  collectionOperations = {
  *      "getapprenant" = {
  *          "method"="get",

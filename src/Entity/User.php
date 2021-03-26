@@ -22,7 +22,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  *  normalizationContext={"groups"={"user:read"}},
  *     attributes = {
- *
  *      "security" = "is_granted('ROLE_ADMIN')",
  *      "security_message" = "Accès refusé!"
  *  },
@@ -75,7 +74,7 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
      * @Assert\NotBlank(
      *  message = "Champ Requis"
      * )
-     * @Groups({"user:read"})
+     * @Groups({"user:read","apprenant:read"})
      */
     private $username;
 
@@ -94,7 +93,7 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:read"})
+     * @Groups({"user:read","apprenant:read"})
      * @Assert\NotBlank(
      *  message = "Champs Requis"
      * )
@@ -103,14 +102,14 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     *  @Groups({"user:read"})
+     * @Groups({"user:read","apprenant:read"})
      * @Assert\NotBlank()
      */
     private $nom;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"user:read"})
+     * @Groups({"user:read","apprenant:read"})
      * @Assert\Email()
      */
     private $email;
@@ -123,7 +122,7 @@ class User implements UserInterface, ContextAwareDataPersisterInterface
 
     /**
      * @ORM\Column(type="blob", nullable=true)
-     * @Groups({"user:read"})
+     * @Groups({"user:read","apprenant:read"})
      * @Assert\File()
      */
     private $avatar;

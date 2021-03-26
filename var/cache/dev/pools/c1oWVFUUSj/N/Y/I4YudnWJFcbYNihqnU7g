@@ -56,18 +56,23 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 ],
                 [
                     'user:read',
+                    'apprenant:read',
                 ],
                 5 => [
                     'user:read',
+                    'apprenant:read',
                 ],
                 [
                     'user:read',
+                    'apprenant:read',
                 ],
                 [
                     'user:read',
+                    'apprenant:read',
                 ],
                 9 => [
                     'user:read',
+                    'apprenant:read',
                 ],
                 [
                     'user:read',

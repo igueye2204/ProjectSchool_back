@@ -80,6 +80,13 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'attributes' => [
                 [
+                    'security' => 'is_granted(\'ROLE_APPRENANT\')',
+                    'security_message' => 'Accès refusé!',
+                    'normalization_context' => [
+                        'groups' => [
+                            'apprenant:read',
+                        ],
+                    ],
                     'input' => null,
                     'output' => null,
                 ],

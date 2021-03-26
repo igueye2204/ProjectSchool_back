@@ -942,7 +942,7 @@ return [[
 
 0 => 'N;',
 1 => [],
-2 => 1613484680,
+2 => 1614166527,
 3 => static function () {
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
@@ -1446,6 +1446,17 @@ return [[
                         ],
                     ],
                 ],
+                'attributes' => [
+                    1 => [
+                        'security' => 'is_granted(\'ROLE_APPRENANT\')',
+                        'security_message' => 'Accès refusé!',
+                        'normalization_context' => [
+                            'groups' => [
+                                'apprenant:read',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
         [
@@ -1768,6 +1779,7 @@ return [[
                 'groups' => [
                     [
                         'competence:read',
+                        'Grpcompetence:read',
                     ],
                 ],
             ],
@@ -2094,6 +2106,7 @@ return [[
                 'groups' => [
                     1 => [
                         'competence:read',
+                        'Grpcompetence:read',
                     ],
                 ],
             ],
@@ -2122,6 +2135,7 @@ return [[
                 'groups' => [
                     1 => [
                         'competence:read',
+                        'Grpcompetence:read',
                     ],
                 ],
             ],
@@ -2677,6 +2691,7 @@ return [[
                 'groups' => [
                     2 => [
                         'user:read',
+                        'apprenant:read',
                     ],
                 ],
             ],
@@ -2744,6 +2759,7 @@ return [[
                 'groups' => [
                     1 => [
                         'user:read',
+                        'apprenant:read',
                     ],
                 ],
             ],
@@ -2779,6 +2795,7 @@ return [[
                 'groups' => [
                     1 => [
                         'user:read',
+                        'apprenant:read',
                     ],
                 ],
             ],
@@ -2814,6 +2831,7 @@ return [[
                 'groups' => [
                     1 => [
                         'user:read',
+                        'apprenant:read',
                     ],
                 ],
             ],
@@ -2871,6 +2889,7 @@ return [[
                 'groups' => [
                     1 => [
                         'user:read',
+                        'apprenant:read',
                     ],
                 ],
             ],

@@ -63,69 +63,72 @@ return [
                     .'|(?:/(index)(?:\\.([^/]++))?)?(*:257)'
                     .'|/(?'
                         .'|docs(?:\\.([^/]++))?(*:288)'
+                        .'|c(?'
+                            .'|ontexts/(.+)(?:\\.([^/]++))?(*:327)'
+                            .'|hats(?'
+                                .'|(?:\\.([^/]++))?(?'
+                                    .'|(*:360)'
+                                .')'
+                                .'|/([^/\\.]++)(?:\\.([^/]++))?(?'
+                                    .'|(*:398)'
+                                .')'
+                            .')'
+                        .')'
                         .'|a(?'
                             .'|dmin/(?'
                                 .'|profil(?'
                                     .'|s(?'
                                         .'|(?:\\.([^/]++))?(?'
-                                            .'|(*:339)'
+                                            .'|(*:452)'
                                         .')'
                                         .'|/(?'
-                                            .'|([^/\\.]++)(?:\\.([^/]++))?(*:377)'
+                                            .'|([^/\\.]++)(?:\\.([^/]++))?(*:490)'
                                             .'|([^/]++)(?'
-                                                .'|(*:396)'
-                                                .'|/users(*:410)'
+                                                .'|(*:509)'
+                                                .'|/users(*:523)'
                                             .')'
                                             .'|([^/\\.]++)(?:\\.([^/]++))?(?'
-                                                .'|(*:447)'
+                                                .'|(*:560)'
                                             .')'
-                                            .'|([^/]++)/users(?:\\.([^/]++))?(*:485)'
+                                            .'|([^/]++)/users(?:\\.([^/]++))?(*:598)'
                                         .')'
                                         .'|ortie/([^/]++)(?'
-                                            .'|(*:511)'
+                                            .'|(*:624)'
                                         .')'
                                     .')'
                                     .'|_sorties(?'
-                                        .'|(?:\\.([^/]++))?(*:547)'
+                                        .'|(?:\\.([^/]++))?(*:660)'
                                         .'|/([^/\\.]++)(?:\\.([^/]++))?(?'
-                                            .'|(*:584)'
+                                            .'|(*:697)'
                                         .')'
                                     .')'
                                 .')'
                                 .'|users(?'
                                     .'|(?:\\.([^/]++))?(?'
-                                        .'|(*:621)'
+                                        .'|(*:734)'
                                     .')'
                                     .'|/(?'
                                         .'|([^/]++)(?'
-                                            .'|(*:645)'
+                                            .'|(*:758)'
                                         .')'
                                         .'|([^/\\.]++)(?:\\.([^/]++))?(?'
-                                            .'|(*:682)'
+                                            .'|(*:795)'
                                         .')'
                                     .')'
                                 .')'
                                 .'|competences/([^/]++)(?'
-                                    .'|(*:716)'
+                                    .'|(*:829)'
                                 .')'
                                 .'|grpcompetences/([^/]++)(?'
-                                    .'|(*:751)'
+                                    .'|(*:864)'
                                 .')'
                             .')'
                             .'|pprenants/([^/]++)(?'
-                                .'|(*:782)'
-                            .')'
-                        .')'
-                        .'|chats(?'
-                            .'|(?:\\.([^/]++))?(?'
-                                .'|(*:818)'
-                            .')'
-                            .'|/([^/\\.]++)(?:\\.([^/]++))?(?'
-                                .'|(*:856)'
+                                .'|(*:895)'
                             .')'
                         .')'
                         .'|formateurs/([^/]++)(?'
-                            .'|(*:888)'
+                            .'|(*:927)'
                         .')'
                     .')'
                 .')'
@@ -144,64 +147,65 @@ return [
         219 => [[['_route' => 'desarchive_user', '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'desarchive_user', '_controller' => 'App\\Controller\\USerController::desarchiveUser'], ['id'], ['DELETE' => 0], null, false, true, null]],
         257 => [[['_route' => 'api_entrypoint', '_controller' => 'api_platform.action.entrypoint', '_format' => '', '_api_respond' => 'true', 'index' => 'index'], ['index', '_format'], null, null, false, true, null]],
         288 => [[['_route' => 'api_doc', '_controller' => 'api_platform.action.documentation', '_format' => '', '_api_respond' => 'true'], ['_format'], null, null, false, true, null]],
-        339 => [
-            [['_route' => 'api_profils_get_profil_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_collection_operation_name' => 'get_profil'], ['_format'], ['GET' => 0], null, false, true, null],
-            [['_route' => 'api_profils_add_profil_collection', '_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_collection_operation_name' => 'add_profil'], ['_format'], ['POST' => 0], null, false, true, null],
-        ],
-        377 => [[['_route' => 'api_profils_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_item_operation_name' => 'put'], ['id', '_format'], ['PUT' => 0], null, false, true, null]],
-        396 => [[['_route' => 'api_profils_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null]],
-        410 => [[['_route' => 'api_profils_get_users_profil_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_item_operation_name' => 'get_users_profil'], ['id'], ['GET' => 0], null, false, false, null]],
-        447 => [
-            [['_route' => 'api_profils_get_profil_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_item_operation_name' => 'get_profil'], ['id', '_format'], ['GET' => 0], null, false, true, null],
-            [['_route' => 'api_profils_desarchive_profil_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_item_operation_name' => 'desarchive_profil'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
-        ],
-        485 => [[['_route' => 'api_profils_users_get_subresource', '_controller' => 'api_platform.action.get_subresource', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_subresource_operation_name' => 'api_profils_users_get_subresource', '_api_subresource_context' => ['property' => 'users', 'identifiers' => [['id', 'App\\Entity\\Profil', true]], 'collection' => true, 'operationId' => 'api_profils_users_get_subresource']], ['id', '_format'], ['GET' => 0], null, false, true, null]],
-        511 => [
-            [['_route' => 'api_profil_sorties_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\ProfilSortie', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
-            [['_route' => 'api_profil_sorties_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\ProfilSortie', '_api_item_operation_name' => 'put'], ['id'], ['PUT' => 0], null, false, true, null],
-        ],
-        547 => [[['_route' => 'api_profil_sorties_get_profilsortie_deleted_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\ProfilSortie', '_api_collection_operation_name' => 'get_profilsortie_deleted'], ['_format'], ['GET' => 0], null, false, true, null]],
-        584 => [
-            [['_route' => 'api_profil_sorties_desarchive_profilsortie_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\ProfilSortie', '_api_item_operation_name' => 'desarchive_profilsortie'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
-            [['_route' => 'api_profil_sorties_delete_profilsortie_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\ProfilSortie', '_api_item_operation_name' => 'delete_profilsortie'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
-        ],
-        621 => [
-            [['_route' => 'api_users_get_users_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_collection_operation_name' => 'get_users'], ['_format'], ['GET' => 0], null, false, true, null],
-            [['_route' => 'api_users_get_users_deleted_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_collection_operation_name' => 'get_users_deleted'], ['_format'], ['GET' => 0], null, false, true, null],
-            [['_route' => 'api_users_post_user_collection', '_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_collection_operation_name' => 'post_user'], ['_format'], ['POST' => 0], null, false, true, null],
-        ],
-        645 => [
-            [['_route' => 'api_users_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
-            [['_route' => 'api_users_update_user_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'update_user'], ['id'], ['PUT' => 0], null, false, true, null],
-        ],
-        682 => [
-            [['_route' => 'api_users_delete_user_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'delete_user'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
-            [['_route' => 'api_users_desarchive_user_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'desarchive_user'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
-        ],
-        716 => [
-            [['_route' => 'api_competences_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Competence', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
-            [['_route' => 'api_competences_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Competence', '_api_item_operation_name' => 'put'], ['id'], ['PUT' => 0], null, false, true, null],
-            [['_route' => 'api_competences_delete_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Competence', '_api_item_operation_name' => 'delete'], ['id'], ['DELETE' => 0], null, false, true, null],
-        ],
-        751 => [
-            [['_route' => 'api_groupe_competences_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\GroupeCompetence', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
-            [['_route' => 'api_groupe_competences_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\GroupeCompetence', '_api_item_operation_name' => 'put'], ['id'], ['PUT' => 0], null, false, true, null],
-        ],
-        782 => [
-            [['_route' => 'api_apprenants_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Apprenant', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
-            [['_route' => 'api_apprenants_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Apprenant', '_api_item_operation_name' => 'put'], ['id'], ['PUT' => 0], null, false, true, null],
-        ],
-        818 => [
+        327 => [[['_route' => 'api_jsonld_context', '_controller' => 'api_platform.jsonld.action.context', '_format' => 'jsonld', '_api_respond' => 'true'], ['shortName', '_format'], null, null, false, true, null]],
+        360 => [
             [['_route' => 'api_chats_get_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\Chat', '_api_collection_operation_name' => 'get'], ['_format'], ['GET' => 0], null, false, true, null],
             [['_route' => 'api_chats_post_collection', '_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\Chat', '_api_collection_operation_name' => 'post'], ['_format'], ['POST' => 0], null, false, true, null],
         ],
-        856 => [
+        398 => [
             [['_route' => 'api_chats_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Chat', '_api_item_operation_name' => 'get'], ['id', '_format'], ['GET' => 0], null, false, true, null],
             [['_route' => 'api_chats_delete_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Chat', '_api_item_operation_name' => 'delete'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
             [['_route' => 'api_chats_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Chat', '_api_item_operation_name' => 'put'], ['id', '_format'], ['PUT' => 0], null, false, true, null],
             [['_route' => 'api_chats_patch_item', '_controller' => 'api_platform.action.patch_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Chat', '_api_item_operation_name' => 'patch'], ['id', '_format'], ['PATCH' => 0], null, false, true, null],
         ],
-        888 => [
+        452 => [
+            [['_route' => 'api_profils_get_profil_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_collection_operation_name' => 'get_profil'], ['_format'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_profils_add_profil_collection', '_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_collection_operation_name' => 'add_profil'], ['_format'], ['POST' => 0], null, false, true, null],
+        ],
+        490 => [[['_route' => 'api_profils_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_item_operation_name' => 'put'], ['id', '_format'], ['PUT' => 0], null, false, true, null]],
+        509 => [[['_route' => 'api_profils_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null]],
+        523 => [[['_route' => 'api_profils_get_users_profil_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_item_operation_name' => 'get_users_profil'], ['id'], ['GET' => 0], null, false, false, null]],
+        560 => [
+            [['_route' => 'api_profils_get_profil_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_item_operation_name' => 'get_profil'], ['id', '_format'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_profils_desarchive_profil_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Profil', '_api_item_operation_name' => 'desarchive_profil'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
+        ],
+        598 => [[['_route' => 'api_profils_users_get_subresource', '_controller' => 'api_platform.action.get_subresource', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_subresource_operation_name' => 'api_profils_users_get_subresource', '_api_subresource_context' => ['property' => 'users', 'identifiers' => [['id', 'App\\Entity\\Profil', true]], 'collection' => true, 'operationId' => 'api_profils_users_get_subresource']], ['id', '_format'], ['GET' => 0], null, false, true, null]],
+        624 => [
+            [['_route' => 'api_profil_sorties_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\ProfilSortie', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_profil_sorties_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\ProfilSortie', '_api_item_operation_name' => 'put'], ['id'], ['PUT' => 0], null, false, true, null],
+        ],
+        660 => [[['_route' => 'api_profil_sorties_get_profilsortie_deleted_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\ProfilSortie', '_api_collection_operation_name' => 'get_profilsortie_deleted'], ['_format'], ['GET' => 0], null, false, true, null]],
+        697 => [
+            [['_route' => 'api_profil_sorties_desarchive_profilsortie_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\ProfilSortie', '_api_item_operation_name' => 'desarchive_profilsortie'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
+            [['_route' => 'api_profil_sorties_delete_profilsortie_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\ProfilSortie', '_api_item_operation_name' => 'delete_profilsortie'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
+        ],
+        734 => [
+            [['_route' => 'api_users_get_users_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_collection_operation_name' => 'get_users'], ['_format'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_users_get_users_deleted_collection', '_controller' => 'api_platform.action.get_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_collection_operation_name' => 'get_users_deleted'], ['_format'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_users_post_user_collection', '_controller' => 'api_platform.action.post_collection', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_collection_operation_name' => 'post_user'], ['_format'], ['POST' => 0], null, false, true, null],
+        ],
+        758 => [
+            [['_route' => 'api_users_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_users_update_user_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'update_user'], ['id'], ['PUT' => 0], null, false, true, null],
+        ],
+        795 => [
+            [['_route' => 'api_users_delete_user_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'delete_user'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
+            [['_route' => 'api_users_desarchive_user_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\User', '_api_item_operation_name' => 'desarchive_user'], ['id', '_format'], ['DELETE' => 0], null, false, true, null],
+        ],
+        829 => [
+            [['_route' => 'api_competences_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Competence', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_competences_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Competence', '_api_item_operation_name' => 'put'], ['id'], ['PUT' => 0], null, false, true, null],
+            [['_route' => 'api_competences_delete_item', '_controller' => 'api_platform.action.delete_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Competence', '_api_item_operation_name' => 'delete'], ['id'], ['DELETE' => 0], null, false, true, null],
+        ],
+        864 => [
+            [['_route' => 'api_groupe_competences_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\GroupeCompetence', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_groupe_competences_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\GroupeCompetence', '_api_item_operation_name' => 'put'], ['id'], ['PUT' => 0], null, false, true, null],
+        ],
+        895 => [
+            [['_route' => 'api_apprenants_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Apprenant', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
+            [['_route' => 'api_apprenants_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Apprenant', '_api_item_operation_name' => 'put'], ['id'], ['PUT' => 0], null, false, true, null],
+        ],
+        927 => [
             [['_route' => 'api_formateurs_get_item', '_controller' => 'api_platform.action.get_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Formateur', '_api_item_operation_name' => 'get'], ['id'], ['GET' => 0], null, false, true, null],
             [['_route' => 'api_formateurs_put_item', '_controller' => 'api_platform.action.put_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Formateur', '_api_item_operation_name' => 'put'], ['id'], ['PUT' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],

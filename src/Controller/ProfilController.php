@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Profil;
-use App\Entity\User;
 use App\Main;
 use App\Repository\ProfilRepository;
 use Doctrine\Common\Collections\ArrayCollection;

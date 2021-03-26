@@ -14,6 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=ProfilRepository::class)
  * @ApiResource(
+ *     attributes = {
+ *      "security" = "is_granted('ROLE_ADMIN')",
+ *      "security_message" = "Vous n'avez pas accès à cette ressource"
+ *  },
  *  routePrefix="/admin",
  *     subresourceOperations={
  *          "get"={
@@ -25,10 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "profil:read"
  *      }
  *  },
- *  attributes = {
- *      "security" = "is_granted('ROLE_ADMIN')",
- *      "security_message" = "Vous n'avez pas accès à cette ressource"
- *  },
+ *
  *  collectionOperations = {
  *
  *      "get_profil" = {

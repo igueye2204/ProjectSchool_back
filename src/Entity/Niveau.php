@@ -22,19 +22,19 @@ class Niveau
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"competence:read"})
+     * @Groups({"competence:read", "Grpcompetence:read"})
      */
     private $niveau;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"competence:read"})
+     * @Groups({"competence:read","Grpcompetence:read"})
      */
     private $actions;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"competence:read"})
+     * @Groups({"competence:read","Grpcompetence:read"})
      */
     private $criteres;
 

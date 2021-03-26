@@ -79,7 +79,7 @@ class USerController extends AbstractController
 
             return new BadRequestHttpException("Ce profil n'éxiste pas");
         }
-
+        
     }
 
     /**

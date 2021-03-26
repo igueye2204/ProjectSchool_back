@@ -67,7 +67,7 @@ class Competence
     private $GroupeCompetence;
 
     /**
-     * @Groups({"competence:read"})
+     * @Groups({"competence:read","Grpcompetence:read"})
      * @ORM\OneToMany(targetEntity=Niveau::class, mappedBy="competence", cascade={"persist"})
      */
     private $niveaux;

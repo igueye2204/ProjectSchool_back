@@ -477,7 +477,6 @@
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="slugger"/>
     </service>
-    <service id="App\Events\JwtCreatedSubscriber" class="App\Events\JwtCreatedSubscriber" autowire="true" autoconfigure="true"/>
     <service id="App\Main" class="App\Main" autowire="true" autoconfigure="true">
       <argument type="service" id="serializer"/>
     </service>

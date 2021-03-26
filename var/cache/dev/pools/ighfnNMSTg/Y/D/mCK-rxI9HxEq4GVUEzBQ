@@ -15,7 +15,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 'Get the value of avatarType',
             ],
             'readable' => [
-                true,
+                false,
             ],
             'writable' => [
                 true,
